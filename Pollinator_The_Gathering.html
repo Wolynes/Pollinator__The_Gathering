@@ -1,0 +1,882 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pollinator: The Gathering — Final Classroom Edition</title><style>
+:root{--ink:#18362e;--muted:#536a5f;--bg:#f5f4e9;--panel:#fffef7;--line:#d3dace;--green:#276d51;--accent:#d5a842;--light:#e8eee5;--warn:#8a542d}*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg)}header{background:#173e35;color:#fff;padding:22px max(22px,calc((100vw - 1080px)/2))}header h1{margin:0;font-family:Georgia,serif;letter-spacing:.2px}header p{margin:2px 0;color:#d8e7da}.container{max-width:1080px;margin:auto;padding:20px 18px 70px}.bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}.chip{font-size:.82rem;padding:6px 11px;border:1px solid var(--line);border-radius:30px;background:#e9ebdf}.chip.active{background:#276d51;color:#fff;border-color:#276d51}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:21px;margin:14px 0;box-shadow:0 3px 12px #163d2510}.small{font-size:.88rem;color:var(--muted)}h2{font-family:Georgia,serif;margin:0 0 8px;font-size:1.7rem}h3{margin:12px 0 8px;font-size:1.12rem}p{margin:7px 0 11px}.flex{display:flex;flex-wrap:wrap;gap:12px}.flex>*{flex:1;min-width:220px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px}.option{background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px;text-align:left;color:inherit;cursor:pointer;font:inherit}.option:hover,.button:hover{filter:brightness(.97)}.option.selected{border-color:var(--green);background:#e8f3e9}.option strong,.option span{display:block}.option span{color:var(--muted);font-size:.86rem;margin-top:4px}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 17px;border:0;border-radius:10px;background:var(--green);color:#fff;font-weight:700;cursor:pointer;font-size:.95rem}.button.secondary{background:#e6eadf;color:var(--ink);border:1px solid #b9c8bb}.button:disabled{background:#bbb;color:#555;cursor:not-allowed}select{width:100%;padding:9px;border:1px solid #aabbb0;border-radius:8px;background:white;color:var(--ink);font:inherit}.row{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}.note{background:#eaf1e9;border-left:4px solid #5b9c7e;padding:12px 14px;margin:12px 0;border-radius:5px}.caution{background:#fff4dd;border-left:4px solid #d0a251;padding:11px 14px;margin:12px 0;border-radius:5px}.flowerbox{min-height:210px;display:grid;place-items:center;background:linear-gradient(#f5f2df,#e6eedb);border-radius:12px}.flowerbox svg{max-width:330px;width:100%;height:220px}.stat{border:1px solid var(--line);border-radius:9px;padding:10px;background:#f8faf4}.stat b{font-size:1.3rem;display:block}.visit{border-bottom:1px solid var(--line);padding:10px 0}.visit:last-child{border:0}.tag{font-size:.78rem;background:#f0e9c8;border-radius:4px;padding:2px 6px}.hidden{display:none!important}fieldset{border:1px solid var(--line);border-radius:10px;margin:13px 0;padding:12px}legend{font-weight:700;padding:0 5px}label.radio{display:block;padding:7px 3px}textarea{width:100%;min-height:80px;border:1px solid #b7c4b9;border-radius:8px;font:inherit;padding:9px}.divider{height:1px;background:var(--line);margin:16px 0}footer{color:var(--muted);font-size:.82rem;margin-top:30px}.metric{font-variant-numeric:tabular-nums}.flowercard{display:flex;gap:9px;align-items:center}.swatch{height:34px;width:34px;border:2px solid #fff;outline:1px solid #bbb;border-radius:50%;flex-shrink:0}.progress{background:#dce6d8;height:10px;overflow:hidden;border-radius:20px}.progress>div{height:100%;background:var(--green);transition:width .2s}details{border:1px solid var(--line);border-radius:10px;padding:10px;background:#f7faf5;margin:8px 0}summary{cursor:pointer;font-weight:700}code{background:#ecf0e6;padding:2px 4px;border-radius:3px}button:focus-visible,select:focus-visible{outline:3px solid #d69f25;outline-offset:2px}@media(max-width:650px){.panel{padding:15px}header{padding:20px}.container{padding:14px 12px 70px}}
+
+.header-tagline{font-size:1.22rem;font-weight:800;color:#ffe4a1;margin:8px 0 3px}
+.header-story{color:#e1ebdf;line-height:1.6;max-width:850px;font-size:1rem}
+.flowerbox svg{max-width:350px}
+.meadow-scene{position:relative;height:min(55vw,500px);min-height:385px;border-radius:18px;overflow:hidden;cursor:none;isolation:isolate;background:linear-gradient(180deg,#c6e6d4 0%,#c9dfb9 28%,#93be8a 58%,#61945f 100%);border:1px solid #789c71}
+.meadow-grass{position:absolute;inset:0;opacity:.85;background:radial-gradient(ellipse 22% 15% at 23% 27%,#e6db9e91,transparent),radial-gradient(ellipse 16% 12% at 70% 23%,#e2d99f83,transparent),radial-gradient(ellipse 14% 18% at 40% 82%,#d5d79b7a,transparent),repeating-linear-gradient(112deg,transparent 0px,transparent 30px,#3c815122 31px,#3c815122 32px)}
+.meadow-path{position:absolute;width:130%;height:30%;left:-15%;top:42%;border-radius:50%;transform:rotate(-9deg);border-top:14px solid #f4eec658;filter:blur(6px)}
+.field-instruction{position:absolute;top:10px;left:12px;right:12px;text-align:center;background:#fffcf0e8;padding:5px 13px;border-radius:30px;color:#315b3c;font-size:.83rem;z-index:2;pointer-events:none}
+.patch{position:absolute;transform:translate(-50%,-50%);width:170px;min-height:136px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid transparent;border-radius:20px;background:transparent;padding:0 4px 6px;font:inherit;color:#152f26;cursor:none;z-index:3;touch-action:manipulation}
+.patch:hover,.patch:focus-visible{background:#f8fbecd9;border-color:#245c45;outline:none}
+.patch.last-visited .patch-name{background:#1c5e45;color:#fff}
+.patch-art{width:145px;height:100px;display:block;filter:drop-shadow(2px 5px 2px #294b384a)}
+.patch-art svg{width:100%;height:100%}
+.patch-name{font-weight:800;font-size:.83rem;letter-spacing:-.1px;background:#fffdece6;border:1px solid #cedebf;padding:3px 8px;border-radius:25px;white-space:nowrap;box-shadow:0 2px 6px #19402b3a}
+.bee-cursor{position:absolute;z-index:5;pointer-events:none;font-size:34px;transform:translate(-50%,-50%) rotate(-22deg);filter:drop-shadow(0 3px 3px #17452e88);transition:left .18s ease-out,top .18s ease-out;line-height:1}
+.meadow-legend{display:flex;flex-wrap:wrap;gap:10px 20px;background:#f4f7e9;padding:10px 14px;border:1px solid #d7e1cd;border-top:0;border-radius:0 0 12px 12px;font-size:.78rem;color:#435e50}
+.legend-last{flex-basis:100%;border-bottom:1px solid #d2dfd0;padding-bottom:8px;font-size:.88rem;color:#214a34}.legend-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.field-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+.field-stats .stat small{font-size:.76rem;display:block;min-height:2em}
+.field-stats .stat b{font-size:1.3rem;margin-top:4px}
+.observation{border:1px solid #bad0b8;border-left:5px solid #508966;border-radius:10px;padding:14px;margin:14px 0;background:#f1f8ec}
+.visit-metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:10px 0}
+.visit-metrics div{background:#fff;border:1px solid #d2ded2;border-radius:7px;padding:7px}
+.visit-metrics span{display:block;color:#576e64;font-size:.76rem;min-height:2.3em}
+.visit-metrics b{display:block;font-size:1.1rem}
+.data-table{border-collapse:collapse;width:100%;font-size:.82rem}
+.data-table th,.data-table td{text-align:left;padding:8px 9px;border-bottom:1px solid #d8e2d5;white-space:nowrap}
+.data-table th{background:#e9f0e5;position:sticky;top:0}
+@media(max-width:680px){.meadow-scene{height:475px;min-height:475px}.patch{width:117px;min-height:100px}.patch-art{width:110px;height:80px}.patch-name{font-size:.68rem;padding:3px 6px}.field-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.visit-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.bee-cursor{font-size:29px}}
+@media(hover:none){.meadow-scene,.patch{cursor:pointer}}
+@media print{.meadow-scene{height:390px}.field-instruction{display:none}}
+
+
+/* Build 6: 20 independently selectable blossoms, four per floral type. */
+.patch-group{position:absolute;transform:translate(-50%,-50%);width:clamp(140px,20vw,195px);display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;z-index:3}
+.patch-individuals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;width:100%}
+.flower-individual{width:100%;height:64px;display:flex;justify-content:center;align-items:center;background:transparent;position:relative;border:2px solid transparent;border-radius:10px;padding:0;pointer-events:auto;cursor:none;transition:background-color .15s,border-color .15s}
+.flower-individual:hover,.flower-individual:focus-visible{background:#fffeedd9;border-color:#276d51;outline:0}
+.flower-individual.sampled-flower{border-color:#4b886d9c}
+.flower-individual.last-flower{background:#fff9d6d9;border-color:#214e3a;border-width:3px}
+.individual-art{height:100%;width:100%;display:grid;place-items:center;filter:drop-shadow(0 2px 2px #284b314d)}
+.individual-art svg{display:block;width:100%;height:100%}
+.individual-number{position:absolute;right:3px;bottom:0;border-radius:10px;min-width:15px;padding:0 2px;background:#fffceb;color:#244838;font-weight:800;font-size:10px;line-height:16px;box-shadow:0 1px 3px #21433330}
+.patch-group .patch-name{font-size:.75rem;line-height:1.25;margin-top:4px;max-width:100%;white-space:normal;text-align:center}
+.learning-panel{background:#edf4e8;border:1px solid #b6d0b5;border-radius:12px;padding:14px;margin:16px 0}
+.learning-panel h3{margin-top:0}
+.memory-row{margin:9px 0 12px}
+.memory-head{display:flex;justify-content:space-between;align-items:center;gap:9px;font-size:.82rem;flex-wrap:wrap}
+.memory-head span{color:#365a49;font-size:.76rem}
+.memory-track{height:9px;background:#d6e2d0;overflow:hidden;border-radius:6px;margin-top:4px}
+.memory-fill{height:100%;background:#317b5c;transition:width .24s}
+.memory-before{font-size:.7rem;color:#557262}
+.prediction-change{background:#eaf3e5;padding:9px 12px;border-radius:8px;font-size:.88rem;margin-top:12px}
+@media(max-width:680px){.patch-group{width:clamp(105px,32vw,135px)}.flower-individual{height:54px}.patch-group .patch-name{font-size:.67rem}.field-instruction{font-size:.73rem;line-height:1.2}.bee-cursor{font-size:25px}}
+@media(hover:none){.flower-individual{cursor:pointer}}
+
+.learning-panel details {margin-top:12px}
+.learning-panel td.metric {font-variant-numeric: tabular-nums;text-align:right}
+@media print {.button,.meadow-scene {display:none!important}}
+
+/* Build 8: intermingled meadow with independently selectable individuals and live sidebar. */
+.game-panel{margin-top:8px;padding:12px 14px}
+.game-panel h2{font-size:1.35rem;margin:0 0 3px}
+.game-summary{font-size:.85rem;line-height:1.3;margin:3px 0 8px;color:var(--muted)}
+.trial-game-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,310px);gap:12px;align-items:stretch}
+.trial-game-layout .meadow-scene{height:clamp(425px,calc(100dvh - 230px),760px);min-height:425px}
+.scattered-flower{position:absolute;transform:translate(-50%,-50%);display:flex;justify-content:center;align-items:center;width:clamp(48px,5.8vw,74px);height:clamp(55px,7.5vh,78px);border:2px solid transparent;border-radius:14px;padding:0;background:transparent;z-index:3;cursor:none;touch-action:manipulation}
+.scattered-flower:hover,.scattered-flower:focus-visible{background:#fffdebdc;border-color:#276d51;outline:0;z-index:4}
+.scattered-flower.sampled-flower{border-color:#2b6a5380}
+.scattered-flower.last-flower{border:3px solid #164e39;background:#fff8cccb}
+.scattered-flower .individual-art{width:100%;height:100%;display:grid;place-items:center}
+.scattered-flower .individual-art svg{width:100%;height:100%}
+.scattered-flower .individual-number{bottom:-4px;right:-5px}
+.meadow-hud{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:12px;background:#fffefa;padding:10px;min-height:0;font-size:.8rem;line-height:1.3;overflow:hidden}
+.hud-progress{display:flex;justify-content:space-between;gap:5px;border-bottom:1px solid var(--line);padding-bottom:6px;font-size:.92rem}
+.hud-progress span{color:var(--muted)}
+.hud-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+.hud-metrics div{padding:6px;background:#eef3e8;border-radius:8px}
+.hud-metrics small{font-size:.7rem;color:var(--muted);display:block}
+.hud-metrics b{font-size:1rem;display:block}
+.hud-insight{padding:8px 9px;background:#f7f1dc;border-radius:9px}
+.hud-insight p{margin:5px 0 0;line-height:1.35;font-size:.77rem}
+.hud-floral>b{display:block;margin-bottom:3px}
+.hud-tags{display:flex;flex-wrap:wrap;gap:3px 7px}
+.hud-tags span{white-space:nowrap;font-size:.70rem}
+.hud-tags i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;border:1px solid #bbb}
+.hud-pollen{display:grid;grid-template-columns:1fr 1fr;gap:6px;border-top:1px solid var(--line);padding-top:7px}
+.hud-pollen span{display:block}
+.hud-pollen b{font-size:.72rem;display:block;font-weight:500}
+.hud-pollen strong{font-size:1rem}
+.hud-ready{background:#e5f1e5;border-radius:9px;padding:8px}
+.hud-ready p{font-size:.73rem;margin:3px 0 7px}
+.hud-ready .button,.meadow-hud>.button{font-size:.82rem;width:100%;padding:8px}
+.hud-note{margin:0;font-size:.74rem;color:var(--muted)}
+.deep-notebook{margin:9px 0 3px}
+.review-area:not(:empty){padding:9px 0}
+.personal-evidence{background:#eef5e9;border-left:4px solid #3e8061;padding:12px 15px;border-radius:8px;margin-top:9px}
+.personal-evidence h3{margin:0 0 7px}
+.personal-evidence p{font-size:.88rem}
+@media(min-width:970px){
+ body:has(.game-panel) header{padding:8px max(18px,calc((100vw - 1230px)/2))}
+ body:has(.game-panel) header h1{font-size:1.25rem}
+ body:has(.game-panel) .header-tagline,body:has(.game-panel) .header-story{display:none}
+ body:has(.game-panel) .container{max-width:1230px;padding:7px 14px 12px}
+ body:has(.game-panel) .bar{gap:4px;margin:0 0 6px}
+ body:has(.game-panel) .chip{padding:2px 7px;font-size:.71rem}
+ body:has(.game-panel) footer{margin-top:7px;font-size:.73rem}
+}
+@media(max-width:969px){.trial-game-layout{grid-template-columns:1fr}.trial-game-layout .meadow-scene{height:520px;min-height:490px}.meadow-hud{overflow:visible}.scattered-flower{width:clamp(48px,8vw,70px);height:clamp(55px,10vw,74px)}}
+@media(hover:none){.scattered-flower{cursor:pointer}}
+
+/* Final Classroom Edition — visual flights, species-aware field guidance, and guided social activities. */
+.flight-trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;filter:drop-shadow(0 1px 0 #ffffffaa)}
+.scattered-flower{z-index:3}.scattered-flower.designed-flower{filter:drop-shadow(0 0 3px #ffe4a6)}
+.scattered-flower.designed-flower .individual-number{background:#214e39;color:#fff;font-size:11px}
+.hud-focus{border:1px solid #c8ddc4;background:#f0f7ec;border-radius:8px;padding:7px}
+.hud-focus>b{display:block;font-size:.78rem}.hud-focus p{margin:5px 0 0;font-size:.71rem}
+.focus-options{display:flex;gap:5px;margin-top:5px}.focus-options button{font:inherit;font-size:.76rem;font-weight:700;flex:1;padding:6px 2px;background:#fff;border:1px solid #c0d0bc;border-radius:7px;cursor:pointer;color:var(--ink)}.focus-options button.active{background:#276d51;color:white;border-color:#276d51}
+.hud-reminder{background:#fdf5df;border:1px solid #e3cb8b;border-radius:8px;padding:8px}.hud-reminder p{margin:3px 0;font-size:.76rem}
+.bee-direct{background:#ebf1f7;border:1px solid #c8d4e1;padding:8px;border-radius:8px}.bee-direct>b{font-size:.8rem}.bee-direct p{font-size:.76rem;margin:4px 0 8px}.bee-direct .button{width:100%;font-size:.8rem;padding:8px}
+.tiny{font-size:.68rem!important;padding:4px 7px!important}.hud-tags b{font-size:.73rem}
+.social-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}.social-card{border:1px solid #d4ddce;background:#f8fbf4;padding:13px;border-radius:12px}.social-card h3{margin:0 0 8px}.social-card .button{margin:4px 0}.social-card p{font-size:.90rem}
+.compass{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px auto;max-width:390px}.compass button{min-height:57px;border:1px solid #97b29d;background:#e7f0e5;color:#1a4739;border-radius:9px;font-weight:700;cursor:pointer}.compass button:hover{background:#c9e8d7}.compass .hive{background:#f3e7bd;text-align:center;border-radius:9px;display:grid;place-items:center;font-size:.8rem}
+.waggle{width:100%;max-width:300px;display:block;margin:10px auto}.waggle-run{stroke-dasharray:12 3;animation:waggle-flicker .45s ease-in-out infinite alternate}@keyframes waggle-flicker{to{stroke-width:10;stroke:#d38b35}}
+.demo-steps{display:flex;flex-wrap:wrap;gap:6px;margin:13px 0}.demo-steps span{padding:9px;background:#dbead4;border-radius:8px;font-size:.82rem}
+.puzzle-scene{min-height:130px;display:grid;place-items:center}.puzzle-disc{position:relative;border-radius:50%;width:130px;height:130px;background:radial-gradient(circle at center,#e8d38a 0 32%,#e0c78c 33% 62%,#c4a16c 64% 100%);border:4px solid #997a4e}.tab-blue,.tab-red{position:absolute;top:45px;padding:8px 10px;color:white;border-radius:7px;font-weight:700;font-size:.85rem}.tab-blue{left:6px;background:#517ab4}.tab-red{right:0;background:#c65a57}.puzzle-drop{position:absolute;left:54px;top:9px;opacity:0;transform:scale(.55);transition:opacity .2s,transform .2s}.puzzle-disc.reward-open .puzzle-drop{opacity:.95;transform:scale(1)}.puzzle-disc.blue-shifted .tab-blue{transform:translate(-11px,20px) rotate(-12deg)}.puzzle-disc.mechanism-visible:before{content:"";position:absolute;top:35px;left:39px;width:59px;height:4px;background:#587dad88;transform:rotate(-9deg);border-radius:2px}
+@media(max-width:760px){.social-grid{grid-template-columns:1fr}}
+@media(min-width:970px){.trial-game-layout .meadow-scene{height:clamp(450px,calc(100dvh - 218px),780px)}.meadow-hud{overflow-y:auto;max-height:clamp(450px,calc(100dvh - 218px),780px)}.hud-insight p{font-size:.76rem}}
+
+/* Classroom final: persistent navigation, memory feedback, and success celebrations. */
+.nav-controls{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:4px 0 9px}.nav-controls .button{padding:7px 11px;font-size:.79rem}.nav-explain{font-size:.74rem;color:#617267}
+.memory-teach{background:#edf4e8;border:1px solid #b8d4be;padding:11px;border-radius:10px;margin:10px 0}.memory-teach p{font-size:.85rem}.memory-teach .memory-row{font-size:.79rem;padding:4px 0;border-bottom:1px solid #d8e5d6}
+.sun-field{position:absolute;left:50%;top:4%;transform:translateX(-50%);font-size:.77rem;font-weight:800;color:#825423;background:#fff5cceb;border-radius:20px;padding:5px 13px;z-index:5;pointer-events:none}.hive-field{position:absolute;left:50%;bottom:1%;transform:translateX(-50%);font-size:.72rem;color:#2b493a;background:#fdf5d8cc;border-radius:18px;padding:4px 11px;z-index:5;pointer-events:none}
+.trial3-meadow .field-instruction{top:44px}.target-sector{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.social-explain{padding:14px;background:#f2f6e9;border-radius:10px;border:1px solid #c6d2bf}.success-celebration{background:#f3f8e8;border:2px solid #76aa79;border-radius:14px;padding:14px;margin:14px 0}
+.confetti-piece{position:fixed;top:-24px;left:var(--x);width:8px;height:15px;background:var(--c);transform:rotate(var(--r));z-index:9999;pointer-events:none;animation:confetti-fall var(--t) ease-in forwards}
+@keyframes confetti-fall{to{transform:translateY(107vh) rotate(980deg);opacity:0}}@media(prefers-reduced-motion:reduce){.confetti-piece{animation:none;display:none}.waggle-run{animation:none}}
+@media(max-width:650px){.nav-explain{flex-basis:100%}}
+<style>/* More of the Trial 3 field remains visible in a single desktop viewport. */
+.compact-dance{background:#f7f8eb;padding:8px;border:1px solid #cddac4;border-radius:9px;font-size:.77rem}.compact-dance .waggle{max-width:156px;margin:2px auto;max-height:112px}.compact-dance p{font-size:.75rem;margin:3px 0}.trial3-meadow .meadow-scene{height:clamp(420px,calc(100dvh - 215px),710px)}
+@media(min-width:970px){.game-panel .trial-game-layout .meadow-scene{height:clamp(440px,calc(100dvh - 215px),780px)}.game-panel .trial-game-layout .meadow-hud{max-height:clamp(440px,calc(100dvh - 215px),780px)}}
+@media(max-width:969px){.game-panel .trial-game-layout .meadow-scene{height:510px}.compact-dance .waggle{max-height:135px}}</style></head><body><header><h1>Pollinator: The Gathering</h1><p class="header-tagline">Apia-cadabra!! 🐝</p><p class="header-story">You have been miniaturized and transformed into a pollinator and must attend a most desirable Gathering!<br>Luckily, you have some control over your predicament. Choose your species wisely, as its biology will help inform which choices you believe will offer the greatest foraging return once you enter The Gathering.</p></header><main class="container"><div id="progress" class="bar"></div><section id="app" aria-live="polite"></section><footer>Educational simulation · Build 11.1 · Biological mechanisms are illustrated using simulated, non-calibrated measurements. Feeding reach influences access and handling, but the assigned glossa-related reach values are illustrative rather than empirically calibrated. Runs offline; no data is sent to a server.</footer></main><script>
+
+'use strict';
+const species={
+ apis:{name:'Apis mellifera',common:'Western honey bee',tongue:5.8,
+ profile:'A worker honey bee is relatively slender, with a hairy thorax, branched body hairs, pollen baskets (corbiculae) on the hind legs, and a lapping/sucking proboscis. Its glossa (the tongue portion of its proboscis) contributes to nectar accessibility. The entire feeding apparatus and floral geometry matter, not glossa length alone. Honey bees can learn floral colors and odors as predictors of rewards; they do not normally perform floral buzz pollination. Successful foragers can communicate the approximate direction and distance of resources using a waggle dance. Individual experience can influence whether a worker follows that information.',
+ social:'Waggle-dance recruitment',kind:'Apis'},
+ bombus:{name:'Bombus terrestris',common:'Buff-tailed bumble bee',tongue:7.5,
+ profile:'A worker buff-tailed bumble bee is robust and densely hairy, with pollen baskets (corbiculae) on the hind legs and a lapping/sucking proboscis containing a glossa (tongue). Bombus terrestris is comparatively short-tongued among bumble bees; glossa length, body size, and handling ability vary among individuals. Bumble bees can learn associations between floral colors, odors, and rewards, and B. terrestris can perform floral buzz pollination. In laboratory experiments, this species has learned novel foraging manipulations through observing trained conspecifics. It does not use Apis-style waggle-dance spatial recruitment.',
+ social:'Observation of a conspecific',kind:'Bombus'}
+};
+const traitDefs=[{key:'architecture',label:'Corolla architecture',options:[['open','Open / dish-shaped','Accessible exposed rewards; typically shorter handling.'],['short','Short tube','Moderate floral depth and handling requirements.'],['deep','Deep tubular','Deep rewards can be difficult to access with short mouthparts.'],['spur','Nectar spur','Nectar may be contained in a spur, increasing access demands.']]},{key:'symmetry',label:'Floral symmetry',options:[['radial','Radial (actinomorphic)','Many possible approach directions.'],['bilateral','Bilateral (zygomorphic)','Can constrain approach and visitor positioning.']]},{key:'landing',label:'Landing structure',options:[['broad','Broad landing platform','May help stabilize a landing visitor.'],['narrow','Narrow landing platform','May demand additional positioning.'],['none','No obvious landing platform','May require hovering or clinging.']]},{key:'orientation',label:'Floral orientation',options:[['upright','Upward-facing','Exposed landing surface and reward opening.'],['horizontal','Outward-facing','Side approach.'],['pendant','Pendant / downward-facing','May complicate access or position the visitor differently.']]},{key:'color',label:'Visible flower color',options:[['violet','Blue–violet','A potential visual cue, not a guarantee of nectar.'],['yellow','Yellow','A potential visual cue, not a guarantee of nectar.'],['white','White','A potential visual cue, not a guarantee of nectar.'],['red','Red','Perceived differently by bees than by humans; not inherently reward-rich.']]},{key:'guides',label:'Nectar guide markings',options:[['contrasting','Contrasting visible guides','Can help a visitor orient to a reward opening.'],['uv','UV-patterned guides','UV contrasts can contribute to bee-visible floral patterning.'],['none','No prominent guides','Does not provide these particular orientation cues.']]},{key:'display',label:'Floral display',options:[['single','Single prominent flower','One flower per display unit.'],['cluster','Small cluster','Several flowers may reduce travel between floral units.'],['large','Large inflorescence','A larger display may be easier to detect but can carry display costs.']]},{key:'scent',label:'Floral scent',options:[['low','Weak scent','Relatively little odor cue.'],['sweet','Pronounced sweet/floral scent','Odor can become a learned cue.'],['herbal','Distinct herbal scent','Distinct odor can become a learned cue.']]},{key:'chemistry',label:'Nectar chemistry',options:[['sucrose','Sucrose-rich nectar','A carbohydrate reward; learned floral odors can persist into later visits.'],['caffeine','Sucrose with low-dose caffeine','In honey bees, caffeine in nectar can improve later retention of a learned odor. It does not make the nectar supply more energetic here.']]}];
+const defaults={architecture:'short',symmetry:'radial',landing:'broad',orientation:'upright',color:'violet',guides:'uv',display:'cluster',scent:'sweet',chemistry:'sucrose'};
+const compat={open:{symmetry:['radial','bilateral'],landing:['broad','narrow'],orientation:['upright','horizontal']},short:{symmetry:['radial','bilateral'],landing:['broad','narrow','none'],orientation:['upright','horizontal','pendant']},deep:{symmetry:['radial','bilateral'],landing:['narrow','none'],orientation:['upright','horizontal','pendant']},spur:{symmetry:['radial','bilateral'],landing:['broad','narrow'],orientation:['upright','horizontal','pendant']}};
+const meadow=[{id:'azure',name:'Azure cups',architecture:'deep',symmetry:'radial',landing:'none',orientation:'horizontal',color:'violet',guides:'uv',display:'cluster',scent:'sweet',chemistry:'caffeine',base:10.5,regen:0.55},{id:'gold',name:'Golden discs',architecture:'open',symmetry:'radial',landing:'broad',orientation:'upright',color:'yellow',guides:'contrasting',display:'large',scent:'low',chemistry:'sucrose',base:6.7,regen:1.2},{id:'cream',name:'Cream flags',architecture:'short',symmetry:'bilateral',landing:'broad',orientation:'horizontal',color:'white',guides:'contrasting',display:'single',scent:'herbal',chemistry:'sucrose',base:8.9,regen:.8},{id:'rose',name:'Rose spurs',architecture:'spur',symmetry:'bilateral',landing:'narrow',orientation:'pendant',color:'red',guides:'none',display:'cluster',scent:'sweet',chemistry:'sucrose',base:12.5,regen:.42}];
+const colorMap={violet:'#817dce',yellow:'#e1b840',white:'#eee9dc',red:'#d47787'};
+const resourceShift={azure:.38,gold:1.38,cream:.70,rose:.55,designed:.67};
+const FLOWERS_PER_TYPE=4, LEARNING_RATE=.40, MEMORY_TEMPERATURE=.85, EXPLORATION_RATE=.15;
+const CUE_CREDIT={color:.35,scent:.30,architecture:.20,identity:.15};
+function flowerKey(id,n){return id+'-'+n}
+function layoutRng(seed){let x=(seed>>>0)||123456789;return ()=>{x=(Math.imul(x,1664525)+1013904223)>>>0;return x/4294967296;}}
+function intermingledPositions(){
+  // A randomized individual-flower layout; persists within the game and across local saves.
+  if(!Number.isInteger(state.fieldSeed))state.fieldSeed=Math.floor(Math.random()*1000000000);
+  const rand=layoutRng(state.fieldSeed);
+  const keys=meadow.flatMap(f=>Array.from({length:FLOWERS_PER_TYPE},(_,n)=>flowerKey(f.id,n)));
+  const slots=[];
+  for(let row=0;row<4;row++)for(let col=0;col<5;col++){
+    slots.push([11+col*19+(rand()-.5)*6.5,17+row*22+(rand()-.5)*8]);
+  }
+  for(let i=keys.length-1;i>0;i--){let j=Math.floor(rand()*(i+1));[keys[i],keys[j]]=[keys[j],keys[i]];}
+  return Object.fromEntries(keys.map((key,i)=>[key,slots[i]]));
+}
+function flowerPosition(id,n){return intermingledPositions()[flowerKey(id,n)]||[9,50]}
+function positionForKey(key){if(!key)return [8,50];return intermingledPositions()[key]||[8,50]}
+
+function newPollenLoad(){return Object.fromEntries(['azure','gold','cream','rose','designed'].map(id=>[id,0]));}
+function newMemory(){
+ const bank=()=>({weights:{},visits:Object.fromEntries(['azure','gold','cream','rose','designed'].map(id=>[id,0]))});
+ return {nectar:bank(),pollen:bank()};
+}
+function cueKeys(f){
+  return {color:`color:${f.color}`,scent:`scent:${f.scent}`,architecture:`corolla:${f.architecture}`,identity:`flower:${f.id}`};
+}
+function expectedReturn(f,m=state.memory,focus=state.focus){
+ const bank=m?.[focus]; if(!bank)return 0;
+ return Object.values(cueKeys(f)).reduce((sum,key)=>sum+(bank.weights[key]||0),0);
+}
+function evidenceCount(id,m=state.memory){return m?.nectar?.visits?.[id]||0;}
+function formatSigned(n){return `${n>=0?'+':''}${n.toFixed(2)}`;}
+
+let state={stage:'choose',pollinator:null,design:{...defaults},designStep:0,pred:{outcome:'access',feature:'architecture',detail:''},visits:[],trial:1,trial2Prediction:null,trial2Visits:[],focus:'nectar',beeRun2:0,beeRun2Done:false,shownRevisit:false,socialPrediction:null,socialContext:null,socialAttempts:[],socialObserved:false,socialMessage:'',puzzleStep:0,reflection:{},seed:42,fieldSeed:Math.floor(Math.random()*1000000000),pools:{1:null,2:null},memory:newMemory(),trial1Memory:null,pollenLoad:newPollenLoad(),odorExposure:{},memoryRetention:null,trial1End:null,undoHistory:[],navStack:[],trialStarts:{},socialPhase:'choice',socialTargetKey:null,socialSuccess:false,socialCelebrated:false,socialHistory:[]};
+const SAVE_KEY='pollinator-gathering-classroom-final10';
+function readLocalProgress(){
+  try{const raw=localStorage.getItem(SAVE_KEY);return raw?JSON.parse(raw):null;}catch(e){return null;}
+}
+function storeLocalProgress(){
+  try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch(e){} // file://, private browsing, disabled storage
+}
+function clearLocalProgress(){try{localStorage.removeItem(SAVE_KEY);}catch(e){}}
+function initializeFromSave(){
+  const saved=readLocalProgress();
+  if(!saved||!saved.stage||!saved.memory?.nectar?.weights||!Array.isArray(saved.visits)||!Array.isArray(saved.trial2Visits))return;
+  const known=new Set(['choose','design','hypothesis','trial1','trial2','socialHyp','trial3','synthesis']);
+  if(!known.has(saved.stage))return;
+  if(saved.stage!=='choose'&&!saved.pollinator)return;
+  state=saved;state.navStack??=[];state.undoHistory??=[];state.trialStarts??={};state.odorExposure??={};state.socialPhase??='choice';state.socialSuccess??=false;
+  // Migrate an old one-action 'simple' success without wiping Trials 1 and 2.
+  if(state.pollinator==='bombus'&&state.socialContext==='simple'&&state.socialSuccess){
+    const a=state.socialAttempts||[];const last=a.at(-1);
+    const valid=last?.found===true&&last?.action==='red'&&a.slice(0,-1).some(x=>x.action==='blue');
+    if(!valid){state.socialSuccess=false;state.socialCelebrated=false;state.puzzleStep=0;state.socialAttempts=[];state.socialMessage='The puzzle now requires two actions. Your earlier field observations are preserved; investigate the two-step mechanism again.';state.socialPhase='field';if(state.stage==='synthesis')state.stage='trial3';}
+  }
+  if(saved.stage!=='choose'&&saved.stage!=='design'&&saved.stage!=='hypothesis'){
+    const f={...state.design,id:'designed',name:'Your designed flower',base:8.4,regen:.72};
+    const ix=meadow.findIndex(x=>x.id==='designed');if(ix>=0)meadow[ix]=f;else meadow.push(f);
+  }
+}
+
+const $=(id)=>document.getElementById(id);const root=$('app');const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const title=(s)=>`<h2>${s}</h2>`;const button=(label,onclick,secondary=false,disabled=false)=>`<button class="button ${secondary?'secondary':''}" onclick="${onclick}" ${disabled?'disabled':''}>${label}</button>`;
+function deterministic(n){let x=Math.sin(n*12.9898+78.233)*43758.5453;return x-Math.floor(x)}
+function opts(key,arr,selected,fn){return `<div class="grid">${arr.map(a=>`<button class="option ${selected===a[0]?'selected':''}" onclick="${fn}('${a[0]}')"><strong>${a[1]}</strong><span>${a[2]||''}</span></button>`).join('')}</div>`}
+function optionsSelect(key,arr,val,fn){return `<label>${key}<select onchange="${fn}(this.value)">${arr.map(a=>`<option value="${a[0]}" ${val===a[0]?'selected':''}>${a[1]}</option>`).join('')}</select></label>`}
+function progress(){let stages=[['choose','Species'],['design','Flower design'],['hypothesis','Prediction'],['trial1','Trial 1'],['trial2','Trial 2'],['socialHyp','Trial 3 plan'],['trial3','Trial 3'],['synthesis','Reflection']];let idx=stages.findIndex(a=>a[0]===state.stage);$('progress').innerHTML=stages.map((st,i)=>`<span class="chip ${i===idx?'active':''}">${st[1]}</span>`).join('')}
+function actionBar(){
+ const h=state.undoHistory||[];const available=[...h].reverse().find(x=>x.stage===state.stage);
+ const retry=['trial1','trial2','trial3'].includes(state.stage);
+ return `<div class="nav-controls">${button('← Back','backStage()',true,!(state.navStack||[]).length)}${button('↶ Undo'+(available?' · '+esc(available.label):''),'undoLast()',true,!available)}${retry?button('↻ Retry this trial','retryTrial()',true):''}<span class="nav-explain">Back keeps your observations. Undo reverses the last action. Retry starts this trial over.</span></div>`;
+}
+function render(preserveScroll=false){const previousY=window.scrollY;progress();const views={choose:chooseView,design:designView,hypothesis:hypView,trial1:trial1View,trial2:trial2View,socialHyp:socialHypView,trial3:trial3View,synthesis:synthesisView};root.innerHTML=actionBar()+views[state.stage]();storeLocalProgress();window.scrollTo({top:preserveScroll?previousY:0,behavior:'instant'}); if(state.stage==='trial3'&&state.socialSuccess)celebrate();}
+function go(s){if(s!==state.stage){state.navStack??=[];state.navStack.push(state.stage);if(state.navStack.length>45)state.navStack.shift();}state.stage=s;render()}
+function backStage(){if(state.stage==='trial3'){if(state.socialPhase==='success'){state.socialPhase='field';render();return;}if(state.socialPhase==='field'){state.socialPhase=state.socialObserved?'briefing':'choice';render();return;}if(state.socialPhase==='briefing'){state.socialPhase='choice';render();return;}}if(!(state.navStack||[]).length)return;state.stage=state.navStack.pop();render()}
+const SNAP_KEYS=['visits','trial2Visits','memory','pollenLoad','pools','focus','trial','beeRun2','beeRun2Done','shownRevisit','odorExposure','memoryRetention','socialPhase','socialObserved','socialAttempts','socialMessage','puzzleStep','socialSuccess','socialCelebrated','socialTargetKey','socialHistory','trial2Prediction','reflection','trial1End','trial1Memory'];
+function snapshot(){return structuredClone(Object.fromEntries(SNAP_KEYS.map(k=>[k,state[k]])))}
+function restoreSnapshot(record){for(const k of SNAP_KEYS)if(Object.hasOwn(record,k))state[k]=structuredClone(record[k]);}
+function saveUndo(label){state.undoHistory??=[];state.undoHistory.push({stage:state.stage,label,record:snapshot()});if(state.undoHistory.length>14)state.undoHistory.shift()}
+function undoLast(){const h=state.undoHistory||[];let i=h.length-1;while(i>=0&&h[i].stage!==state.stage)i--;if(i<0)return;
+ if(state.stage==='trial1'&&(state.trial2Prediction!==null||state.trial2Visits.length)){if(!confirm('Undoing a Trial 1 visit changes the foundation of later trials. Reset Trial 2 and Trial 3 observations as well?'))return;resetLaterTrials();}
+ const record=h[i].record;state.undoHistory=h.slice(0,i);restoreSnapshot(record);render(true);
+}
+function resetSocial(){state.socialAttempts=[];state.socialObserved=false;state.socialMessage='';state.puzzleStep=0;state.socialSuccess=false;state.socialCelebrated=false;state.socialPhase='choice';state.socialTargetKey=null;}
+function resetLaterTrials(){state.trial2Visits=[];state.trial2Prediction=null;state.trial1Memory=null;state.beeRun2=0;state.beeRun2Done=false;state.pools[2]=null;state.memoryRetention=null;state.trialStarts.trial2=null;state.trialStarts.trial3=null;resetSocial();}
+function retryTrial(){const st=state.stage;if(!['trial1','trial2','trial3'].includes(st))return;const prompt=st==='trial1'?'Restart Trial 1? This will reset all later trials, but your floral design is kept.':st==='trial2'?'Restart Trial 2 from its original reward-change conditions? Trial 1 stays intact.':'Retry Trial 3 from the hive / puzzle starting point? Trials 1 and 2 remain intact.';if(!confirm(prompt))return;
+ const base=state.trialStarts?.[st];if(st==='trial1'&&base){restoreSnapshot(base);state.undoHistory=[];state.trialStarts={trial1:structuredClone(base)};state.navStack=state.navStack.filter(x=>!['trial2','socialHyp','trial3','synthesis'].includes(x));}
+ else if(st==='trial2'&&base){restoreSnapshot(base);state.undoHistory=state.undoHistory.filter(x=>x.stage!=='trial2'&&x.stage!=='trial3');state.trialStarts.trial3=null;}
+ else if(st==='trial3'){resetSocial();state.socialHistory=[];state.undoHistory=state.undoHistory.filter(x=>x.stage!=='trial3');}
+ render();}
+function trial1CanChange(){if(state.stage!=='trial1'||!(state.trial2Prediction!==null||state.trial2Visits.length||state.trial1Memory))return true;
+ if(!confirm('Changing Trial 1 adds new experience to the bee. Trial 2 and Trial 3 would need to be restarted. Continue?'))return false;
+ if(state.trial1End){state.memory=structuredClone(state.trial1End.memory);state.pollenLoad=structuredClone(state.trial1End.pollenLoad);state.odorExposure=structuredClone(state.trial1End.odorExposure);state.pools[1]=structuredClone(state.trial1End.pool1);}
+ resetLaterTrials();state.trial1End=null;return true;
+}
+function changeDesignAllowed(){if(!state.visits.length&&!state.trial2Visits.length)return true;if(!confirm('Changing this flower means its earlier observations no longer apply. Restart the dependent trials and keep your new design?'))return false;
+ state.visits=[];state.trial2Visits=[];state.memory=newMemory();state.pollenLoad=newPollenLoad();state.odorExposure={};state.memoryRetention=null;state.trial1End=null;state.trial1Memory=null;state.pools={1:null,2:null};state.trial2Prediction=null;state.beeRun2=0;state.beeRun2Done=false;state.shownRevisit=false;state.undoHistory=[];state.trialStarts={};resetSocial();return true;
+}
+
+function chooseSpecies(s){if(s!==state.pollinator&&(state.visits.length||state.trial2Visits.length)&&!changeDesignAllowed())return;state.pollinator=s;render()}
+function chooseView(){return `<div class="panel">${title('Choose your pollinator')}<p class="small">Select a real species to begin. Profiles describe documented morphology and behavior. Model feeding-reach parameters are illustrative, not measured values for these workers.</p><div class="grid">${Object.keys(species).map(k=>{let o=species[k];return `<button class="option ${state.pollinator===k?'selected':''}" onclick="chooseSpecies('${k}')"><strong><em>${o.name}</em></strong><span>${o.common}</span><span>${o.social}</span></button>`}).join('')}</div>${state.pollinator?`<details><summary>Profile: ${species[state.pollinator].name}</summary><p>${species[state.pollinator].profile}</p><p class="small">In the simulation, this bee is assigned an illustrative feeding reach of ${species[state.pollinator].tongue} mm. It is not a species-average measurement; worker morphology, behavior, and flower geometry vary.</p></details>`:''}<div class="note">These profiles introduce documented morphology and behavior. The field is a scientific teaching simulation, not a species-calibrated measurement.</div><div class="row">${button('Begin floral construction →',"go('design')",false,!state.pollinator)}</div></div>`}
+function ensureCompatible(){const c=compat[state.design.architecture];for(const key of ['symmetry','landing','orientation'])if(!c[key].includes(state.design[key]))state.design[key]=c[key][0]}
+function pickTrait(k,v){if(state.design[k]!==v&&!changeDesignAllowed())return;state.design[k]=v;if(k==='architecture'){state.design.orientation=compat[v].orientation[0];ensureCompatible()}render()}
+function flowerSVG(d, showStem=false, forceSingle=false){
+  const n=forceSingle?1:(d.display==='single'?1:d.display==='cluster'?3:6);
+  const fill=colorMap[d.color];
+  const dark={violet:'#5a4aaf',yellow:'#a97b20',white:'#b5aaa4',red:'#9d3f5b'}[d.color];
+  const rotation={upright:0,horizontal:90,pendant:180}[d.orientation];
+  // Keep the flower face's anatomy independent of orientation and draw orientation only when chosen.
+  const place=n===1?[[160,106,1.35]]:n===3?[[115,92,.77],[160,75,.77],[205,92,.77]]:[[123,77,.56],[157,65,.56],[191,77,.56],[123,119,.56],[157,107,.56],[191,119,.56]];
+  const mark=(paths)=>d.guides==='none'?'':`<g stroke="${d.guides==='uv'?'#4a74b3':'#fff2b2'}" stroke-width="2.8" stroke-linecap="round" fill="none" stroke-dasharray="${d.guides==='uv'?'3 4':'none'}">${paths}</g>`;
+  const petal=(x,y,rx,ry,angle)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${angle} ${x} ${y})" fill="${fill}" stroke="${dark}" stroke-width="1.6"/>`;
+  let bloom='';
+  if(d.architecture==='open'){
+    if(d.symmetry==='radial'){
+      bloom=[0,60,120,180,240,300].map(a=>`<ellipse cx="0" cy="-26" rx="16" ry="27" transform="rotate(${a})" fill="${fill}" stroke="${dark}" stroke-width="1.5"/>`).join('');
+      bloom+=`<circle cx="0" cy="0" r="17" fill="#d6a859" stroke="${dark}" stroke-width="1.8"/>`;
+    }else{
+      bloom=petal(-24,-20,17,25,-33)+petal(24,-20,17,25,33)+petal(0,-32,15,24,0)+`<path d="M-37 0 Q0 5 37 0 Q28 42 0 48 Q-28 42 -37 0Z" fill="${fill}" stroke="${dark}" stroke-width="2"/>`+`<ellipse cx="0" cy="0" rx="15" ry="10" fill="#d6a859"/>`;
+    }
+    bloom+=mark('<path d="M-21 -7 L-10 -2 M21 -7 L10 -2 M0 26 L0 13"/>');
+  }else if(d.architecture==='short'||d.architecture==='deep'){
+    let deep=d.architecture==='deep', len=deep?76:41, opening=deep?14:19, lip=deep?36:46;
+    // In side section, a deep corolla visibly extends much farther from the flared opening.
+    bloom=`<path d="M-${opening} -17 L-${deep?8:12} ${len-11} Q0 ${len+4} ${deep?8:12} ${len-11} L${opening} -17Z" fill="${fill}" stroke="${dark}" stroke-width="2.4"/>`;
+    if(d.symmetry==='radial'){
+      bloom+=`<path d="M-${opening} -16 Q-${lip} -22 -${lip} -46 Q-${opening+4} -44 -${opening-4} -17 M${opening} -16 Q${lip} -22 ${lip} -46 Q${opening+4} -44 ${opening-4} -17" fill="${fill}" stroke="${dark}" stroke-width="2"/>`;
+      bloom+=`<path d="M-${opening-4} -18 Q0 -${deep?49:37} ${opening-4} -18" fill="none" stroke="${dark}" stroke-width="3"/>`;
+    }else{
+      bloom+=petal(-24,-28,17,23,-35)+petal(24,-28,17,23,35)+`<path d="M-24 -16 Q0 -9 24 -16 Q24 8 0 15 Q-24 8 -24 -16Z" fill="${fill}" stroke="${dark}" stroke-width="2"/>`;
+    }
+    bloom+=`<ellipse cy="-17" rx="${opening}" ry="8" fill="${dark}"/><ellipse cy="-18" rx="${deep?7:10}" ry="4" fill="#d7ad64"/>`;
+    bloom+=mark('<path d="M-29 -33 L-10 -20 M29 -33 L10 -20"/>');
+  }else{
+    // Nectar spur: a narrow *darker* tubular extension arising behind the corolla, not a larkspur flower silhouette.
+    bloom=`<path d="M9 10 Q30 23 42 39 Q51 50 56 65 Q56 75 48 77 Q41 76 39 66 Q35 45 13 29 L-2 16Z" fill="${dark}" stroke="#65576c" stroke-width="2"/>`;
+    bloom+=petal(-26,-18,17,28,-37)+petal(25,-18,17,28,37)+petal(0,-35,19,26,0);
+    bloom+=`<path d="M-27 4 Q0 10 27 4 Q22 39 0 43 Q-23 39 -27 4Z" fill="${fill}" stroke="${dark}" stroke-width="2.4"/>`;
+    bloom+=`<ellipse cy="6" rx="13" ry="8" fill="#d8aa67"/>`+mark('<path d="M-20 -11 L-8 4 M20 -11 L8 4"/>');
+  }
+  // Distinct landing lips are not added to every drawing by default.
+  if(d.landing==='broad'&&d.architecture!=='spur')bloom+=`<path d="M-23 37 Q0 52 23 37 L24 49 Q0 65 -24 49Z" fill="${fill}" stroke="${dark}" stroke-width="1.7"/>`;
+  if(d.landing==='narrow'&&d.architecture!=='spur')bloom+=`<path d="M-8 37 L0 52 L8 37Z" fill="${fill}" stroke="${dark}" stroke-width="1.7"/>`;
+  if(d.architecture==='spur'&&d.landing==='broad')bloom+=`<path d="M-19 34 Q0 52 19 34 L22 45 Q0 60 -22 45Z" fill="${fill}" stroke="${dark}" stroke-width="1.7"/>`;
+  const stem=showStem?`<g stroke="#60916e" stroke-width="3.5" stroke-linecap="round" fill="none"><path d="M160 207 L160 148"/>${place.map(([x,y])=>`<path d="M160 165 Q${x} 143 ${x} ${y+23}"/>`).join('')}</g><path d="M160 175 Q143 158 131 174 Q144 188 160 175 M160 185 Q178 163 194 172 Q181 187 160 185" fill="#8cae78"/>`:'';
+  const flowerNodes=place.map(([x,y,s])=>`<g transform="translate(${x} ${y}) scale(${s})"><g transform="rotate(${rotation})">${bloom}</g></g>`).join('');
+  return `<svg viewBox="0 0 320 220" role="img" aria-label="${esc(d.orientation)} ${esc(d.architecture)} corolla, ${esc(d.display)} display"><title>${esc(d.architecture)} corolla; ${esc(d.orientation)} orientation; ${esc(d.display)} display</title>${stem}${flowerNodes}</svg>`;
+}
+function designView(){let t=traitDefs[state.designStep],avail=compat[state.design.architecture],choices=t.options.filter(o=>!avail[t.key]||avail[t.key].includes(o[0]));return `<div class="panel">${title('Construct your ideal floral phenotype')}<p>Design a flower for <strong><em>${species[state.pollinator].name}</em></strong>. Begin with architecture, then select structurally compatible traits and sensory signals. Morphological constraints are explained rather than arbitrary trait combinations being allowed.</p><div class="row"><span class="tag">Floral trait</span><span class="small">${t.label}</span></div><div class="progress"><div style="width:${(state.designStep+1)/traitDefs.length*100}%"></div></div><div class="flex"><div class="flowerbox">${flowerSVG(state.design,t.key==='display',t.key==='architecture')}</div><div><h3>${t.label}</h3><p class="small">${t.key==='architecture'?'This choice sets the physical framework and available structural combinations.':t.key==='color'?'Color is a potential sensory cue, not a guarantee of higher rewards.':t.key==='scent'?'Scent can help recognition and learning; it does not directly encode nectar quantity.':t.key==='chemistry'?'Nectar chemistry can affect odor memory in honeybees without adding to the energetic reward in this game.':'Choose a trait that you expect may affect this pollinator. You will test your assumptions later.'}</p>${choices.map(o=>`<button class="option ${state.design[t.key]===o[0]?'selected':''}" onclick="pickTrait('${t.key}','${o[0]}')"><strong>${o[1]}</strong><span>${o[2]}</span></button>`).join('')}</div></div><div class="caution"><strong>Scientific constraint:</strong> ${t.key==='architecture'?'We constrain later symmetry, landing and orientation options to plausible schematic combinations. These are teaching-model limits, not universal botanical laws.':'Real plants show extensive trait combinations. Not all traits predict reward; some affect detection, handling or pollen contact.'}</div><div class="row">${button('← Previous', 'designStep(-1)',true,state.designStep===0)}${button(state.designStep===traitDefs.length-1?'Continue to hypothesis →':'Next trait →',state.designStep===traitDefs.length-1?"go('hypothesis')":'designStep(1)')}</div></div><div class="panel"><h3>Current floral phenotype</h3><p class="small">${traitDefs.map(d=>`<strong>${d.label}:</strong> ${d.options.find(o=>o[0]===state.design[d.key])[1]}`).join(' · ')}</p></div>`.replaceAll(/onclick="\(\('([^']+)'\),'([^']+)'\)\('([^']+)'\)"/g,'onclick="pickTrait(\'$2\',\'$3\')"')}
+function designStep(d){state.designStep=Math.max(0,Math.min(traitDefs.length-1,state.designStep+d));render()}
+function hypView(){
+ const features=[['architecture','Corolla shape and feeding access'],['signals','Color, scent, and floral signals'],['display','Flower display and approach'],['chemistry','Nectar chemistry and learned odor']];
+ const results=[['access','Less time or effort to obtain a reward'],['memory','Stronger or longer-lasting learned associations'],['transfer','More opportunities for pollen to reach a stigma'],['rate','More net energy per unit foraging time']];
+ const p=state.pred;return `<div class="panel">${title('Make a starting prediction')}<p>You have designed a flower for <em>${species[state.pollinator].name}</em>. Choose what you expect your flower to change. There is no graded answer: your observations may surprise you.</p><div class="flex"><div class="flowerbox">${flowerSVG(state.design)}</div><div><h3>Your constructed flower</h3>${traitDefs.map(d=>`<p class="small"><b>${d.label}:</b> ${d.options.find(o=>o[0]===state.design[d.key])[1]}</p>`).join('')}</div></div>
+ <fieldset><legend>Which characteristic do you predict will matter most?</legend>${features.map(([k,l])=>`<label class="radio"><input type="radio" name="feature" value="${k}" ${p.feature===k?'checked':''} onchange="state.pred.feature=this.value;updateHypPreview()"> ${l}</label>`).join('')}</fieldset>
+ <fieldset><legend>What consequence do you predict?</legend>${results.map(([k,l])=>`<label class="radio"><input type="radio" name="outcome" value="${k}" ${p.outcome===k?'checked':''} onchange="state.pred.outcome=this.value;updateHypPreview()"> ${l}</label>`).join('')}</fieldset>
+ <div class="note" id="hyp-preview"><b>Your hypothesis:</b> If this flower influences foraging through <b>${({architecture:"corolla shape and access",signals:"floral color and scent",display:"display and approach",chemistry:"nectar chemistry"})[p.feature||"architecture"]}</b>, you predict <b>${({access:"less effort obtaining a reward",memory:"a stronger or longer-lasting learned association",transfer:"more opportunities for pollen deposition",rate:"greater energetic returns per unit time"})[p.outcome||"access"]}</b>.</div><label for="reason">Your reasoning, in your own words</label><textarea id="reason" placeholder="I predict that … because …">${esc(p.detail)}</textarea><p class="small">Nectar and pollen availability have not been revealed. Your prediction is a starting idea to investigate, not a test of what you already know.</p><div class="row">${button('← Edit flower',"go('design')",true)}${button('Enter The Gathering →','saveHyp()')}</div></div>`;
+}
+function updateHypPreview(){const f={architecture:'corolla shape and access',signals:'floral color and scent',display:'display and approach',chemistry:'nectar chemistry'};const o={access:'less effort obtaining a reward',memory:'a stronger or longer-lasting learned association',transfer:'more opportunities for pollen deposition',rate:'greater energetic returns per unit time'};const el=$('hyp-preview');if(el)el.innerHTML=`<b>Your hypothesis:</b> If my design influences the bee through <b>${f[state.pred.feature||'architecture']}</b>, I predict <b>${o[state.pred.outcome||'access']}</b>. We can compare this idea with what actually happens.`;}
+
+function saveHyp(){state.pred.detail=$('reason').value; const candidate={...state.design,id:'designed',name:'Your designed flower',base:8.4,regen:.72}; const ix=meadow.findIndex(f=>f.id==='designed');if(ix>=0)meadow[ix]=candidate;else meadow.push(candidate);go('trial1');if(!state.trialStarts.trial1)state.trialStarts.trial1=snapshot();render()}
+function traitsOf(f){return `${f.architecture==='deep'?'deep tubular':f.architecture==='open'?'open':f.architecture==='spur'?'spurred':'short tubular'} corolla; ${f.symmetry==='bilateral'?'bilateral':'radial'} symmetry; ${f.display} display; ${f.color} color`}
+function cost(f){let reach=species[state.pollinator].tongue;let depth={open:2,short:4,deep:8,spur:10}[f.architecture];let gap=Math.max(0,depth-reach);let handle=1.7+{open:0,short:1.1,deep:2.3,spur:3.1}[f.architecture]+gap*.7+(f.landing==='none'?.85:f.landing==='narrow'?.35:0)+(f.orientation==='pendant'?.7:0)-(f.guides==='none'?0:.25);return {handle:Math.max(1,handle),access:Math.max(.16,1-gap*.19)}}
+function getPool(trial){
+ if(!state.pools)state.pools={1:null,2:null};
+ if(!state.pools[trial]){
+  const pools={};
+  meadow.forEach(f=>{
+   for(let n=0;n<FLOWERS_PER_TYPE;n++){
+    const base=f.base*(trial===2?resourceShift[f.id]:1);
+    const variation=.86+deterministic((n+1)*47+f.base*91+trial*31)*.28;
+    const level=base*variation;
+    const capacity=level*1.45;
+    const available=level*(.76+deterministic((n+1)*107+f.base*19+trial*7)*.24);
+    const pollenBase=({azure:2.0,gold:5.4,cream:3.9,rose:2.4,designed:3.5}[f.id]||3.0);
+    const pollenCapacity=pollenBase*1.50*variation;
+    const pollenAvailable=pollenBase*(.82+deterministic((n+1)*23+f.base*13+trial*29)*.18);
+    pools[flowerKey(f.id,n)]={capacity,available,pollenCapacity,pollenAvailable};
+   }
+  });
+  state.pools[trial]=pools;
+ }
+ return state.pools[trial];
+}
+function travelSeconds(fromKey,toKey){
+  const start=positionForKey(fromKey),dest=positionForKey(toKey);
+  const distance=Math.hypot(dest[0]-start[0],dest[1]-start[1]);
+  return .7+distance*.055; // neither reading time nor click speed affects flight
+}
+function measure(f,trial,i,individual){
+ const c=cost(f);
+ const arr=trial===1?state.visits:state.trial2Visits;
+ const last=arr.length?arr[arr.length-1].individualId:null;
+ const individualId=flowerKey(f.id,individual),pool=getPool(trial),flower=pool[individualId];
+ const availableBefore=flower.available;
+ const focus=state.focus||'nectar';
+ const noise=.91+deterministic(i*71+f.base*9+trial*18+individual*39)*.18;
+ // Changing foraging focus alters allocation of handling effort, not flower chemistry.
+ const nectarFraction=focus==='nectar'?1:.56;
+ const collected=Math.min(availableBefore,availableBefore*c.access*noise*nectarFraction);
+ flower.available=Math.max(0,flower.available-collected);
+ const pollenBeforeFood=flower.pollenAvailable;
+ const pollenFraction=focus==='pollen'?.67:.19;
+ const pollenCollected=Math.min(flower.pollenAvailable,flower.pollenAvailable*pollenFraction*(.70+.30*c.access));
+ flower.pollenAvailable=Math.max(0,flower.pollenAvailable-pollenCollected);
+ const handling=c.handle+(focus==='pollen'?.9:0),travel=travelSeconds(last,individualId),total=handling+travel;
+ const nectarEnergy=collected*1.2;
+ const net=nectarEnergy-(total*.55+1.1);
+ const rate=net/total;
+ const pollenRate=pollenCollected/total; // nutritional pollen units per modeled second, not energy
+ const transfer=Math.max(.03,Math.min(.94,.55+(f.symmetry==='bilateral'?.12:0)+(f.landing==='broad'?.08:0)-(f.architecture==='deep'&&c.access<.65?.19:0)-(f.orientation==='pendant'?.12:0)));
+ // Loose pollen on the body is separate from collected pollen packed for provisioning.
+ if(!state.pollenLoad)state.pollenLoad=newPollenLoad();
+ const pollenBefore={...state.pollenLoad};
+ const contact=deterministic(i*103+trial*71+individual*17+f.base*2.1)<transfer;
+ const conspecific=contact?Math.min(pollenBefore[f.id]||0,Math.round((pollenBefore[f.id]||0)*.40*10)/10):0;
+ let heterospecific=0;
+ for(const g of meadow){
+  const cargo=pollenBefore[g.id]||0;
+  const deposited=contact?Math.min(cargo,Math.round(cargo*.40*10)/10):0;
+  if(g.id!==f.id)heterospecific+=deposited;
+  state.pollenLoad[g.id]=Math.max(0,+(Math.max(0,cargo-deposited)*.88).toFixed(2));
+ }
+ const antherContact=deterministic(i*137+trial*37+individual*29+f.base*11)<Math.min(.95,.48+.30*c.access+(f.symmetry==='bilateral'?.08:0));
+ const pickedUp=antherContact?+(1.5+2.5*c.access).toFixed(2):0;
+ state.pollenLoad[f.id]=+(state.pollenLoad[f.id]+pickedUp).toFixed(2);
+ // Ecological time advances per visit, not based on reading or clicking speed.
+ meadow.forEach(g=>{for(let n=0;n<FLOWERS_PER_TYPE;n++){
+  const p=pool[flowerKey(g.id,n)];p.available=Math.min(p.capacity,p.available+g.regen);
+  p.pollenAvailable=Math.min(p.pollenCapacity,p.pollenAvailable+.16);
+ }});
+ return {id:f.id,name:f.name,individualId,individualNumber:individual+1,trial,focus,nectarChemistry:f.chemistry||'sucrose',
+  nectar:+nectarEnergy.toFixed(2),standing:+availableBefore.toFixed(2),pollenNutrition:+pollenCollected.toFixed(2),pollenStanding:+pollenBeforeFood.toFixed(2),pollenRate:+pollenRate.toFixed(3),
+  handling:+handling.toFixed(2),travel:+travel.toFixed(2),time:+total.toFixed(2),net:+net.toFixed(2),rate:+rate.toFixed(2),transfer:+transfer.toFixed(2),stigmaContact:contact,antherContact:antherContact,conspecificDep:+conspecific.toFixed(2),heterospecificDep:+heterospecific.toFixed(2),pollenPickedUp:pickedUp,cargoBefore:+(pollenBefore[f.id]||0).toFixed(2),cargoAfter:+state.pollenLoad[f.id].toFixed(2),access:+c.access.toFixed(2)};
+}
+function doVisit(id,individual=0,source='student'){
+ const f=meadow.find(x=>x.id===id);if(!f)return;
+ if(!['trial1','trial2'].includes(state.stage))return;
+ if(state.trial===2&&state.trial2Prediction===null)return;
+  if(!Number.isInteger(individual)||individual<0||individual>=FLOWERS_PER_TYPE)return;
+  if(!trial1CanChange())return;saveUndo('flower visit');
+  const arr=state.trial===1?state.visits:state.trial2Visits;
+ const v=measure(f,state.trial,arr.length+1,individual);
+ v.source=source;
+  updateMemory(v);
+  const flower=meadow.find(f=>f.id===v.id);const scent=flower.scent;state.odorExposure??={};const o=state.odorExposure[scent]??{plain:0,caffeine:0};o[v.nectarChemistry==='caffeine'?'caffeine':'plain']+=Math.max(0,v.nectar);state.odorExposure[scent]=o;
+  arr.push(v);
+ if(state.trial===2){
+   if(source==='model'){state.beeRun2=(state.beeRun2||0)+1; if(state.beeRun2>=4)state.beeRun2Done=true;}
+   else state.beeRun2=0;
+ }
+ render(true);
+}
+function updateMemory(v){
+ if(!state.memory?.nectar)state.memory=newMemory();
+ const f=meadow.find(x=>x.id===v.id);
+ const reports={};
+ for(const focus of ['nectar','pollen']){
+  const bank=state.memory[focus];
+  const before=expectedReturn(f,state.memory,focus);
+  const allBefore=Object.fromEntries(meadow.map(g=>[g.id,expectedReturn(g,state.memory,focus)]));
+  const reward=focus==='nectar'?v.rate:v.pollenRate;
+  const error=reward-before;
+  const keys=cueKeys(f);
+  const contributions=[];
+  for(const [kind,key] of Object.entries(keys)){
+   const change=LEARNING_RATE*CUE_CREDIT[kind]*error;
+   bank.weights[key]=(bank.weights[key]||0)+change;
+   contributions.push({kind,label:key,change:+change.toFixed(4)});
+  }
+  bank.visits[f.id]++;
+  reports[focus]={before:+before.toFixed(3),after:+expectedReturn(f,state.memory,focus).toFixed(3),error:+error.toFixed(3),contributions,
+    generalized:meadow.filter(g=>g.id!==f.id).map(g=>({name:g.name,change:expectedReturn(g,state.memory,focus)-allBefore[g.id]})).filter(x=>Math.abs(x.change)>.00001).sort((a,b)=>Math.abs(b.change)-Math.abs(a.change))};
+ }
+ v.learning=reports;
+ const active=reports[v.focus];
+ v.expectedBefore=active.before;v.expectedAfter=active.after;v.predictionError=active.error;v.cueChanges=active.contributions;v.generalized=active.generalized;
+}
+function preferenceShares(m=state.memory,focus=state.focus){
+ if(!meadow.length)return {};
+ const scores=meadow.map(f=>expectedReturn(f,m,focus));
+ const max=Math.max(...scores);
+ const temperature=focus==='pollen'?.23:MEMORY_TEMPERATURE;const w=scores.map(q=>Math.exp(Math.max(-40,(q-max)/temperature)));
+ const total=w.reduce((a,b)=>a+b,0);
+ return Object.fromEntries(meadow.map((f,i)=>[f.id,(1-EXPLORATION_RATE)*(w[i]/total)+EXPLORATION_RATE/meadow.length]));
+}
+function cueWeightsTable(){
+ const keys=['color','scent','architecture'];
+ const rows=keys.map(k=>{
+  const seen=new Map();
+  meadow.forEach(f=>{
+   const id=cueKeys(f)[k];
+   const label=k==='color'?({violet:'Blue–violet',yellow:'Yellow',white:'White',red:'Red'}[f.color]):k==='scent'?({sweet:'Sweet floral',herbal:'Herbal',low:'Weak'}[f.scent]):({open:'Open dish',short:'Short tube',deep:'Deep tube',spur:'Spur'}[f.architecture]);
+   seen.set(id,label);
+  });
+  return [...seen].map(([id,label])=>`<tr><td>${k==='architecture'?'Corolla':k.charAt(0).toUpperCase()+k.slice(1)}</td><td>${esc(label)}</td><td class="metric">${formatSigned(state.memory[state.focus].weights[id]||0)}</td></tr>`).join('');
+ }).join('');
+ return `<details><summary>Advanced: inspect learned cue values</summary><p class="small">These numbers are simulated associations, not measured bee neural activity. Color, scent, architecture and floral identity share the learning update. Full equations are in the scientific notes.</p><table class="data-table"><thead><tr><th>Feature</th><th>Cue</th><th>Association</th></tr></thead><tbody>${rows}</tbody></table></details>`;
+}
+function learnedPreferences(){
+ const focus=state.focus||'nectar',shownMemory=(state.stage==='trial1'&&state.trial1End)?state.trial1End.memory:state.memory,shares=preferenceShares(shownMemory,focus);
+ const rewardLabel=focus==='nectar'?'net nectar energetic return':'nutritional pollen collection';
+ return `<section class="learning-panel"><h3>What is your bee expecting?</h3><p>Based on previous visits, the game estimates which flowers the bee currently associates with ${rewardLabel}. A stronger association makes a flower <em>more likely</em> to be chosen—not certain.</p>
+ ${meadow.map(f=>{const q=expectedReturn(f,shownMemory,focus),p=shares[f.id]||0;return `<div class="memory-row"><div class="memory-head"><b>${esc(f.name)}</b><span>${evidenceCount(f.id)} visits · next-choice likelihood ${Math.round(p*100)}%</span></div><div class="memory-track"><div class="memory-fill" style="width:${Math.round(p*100)}%"></div></div></div>`}).join('')}
+ <p class="small">Changing foraging focus switches between the model's separate nectar and pollen associations. These illustrative likelihoods reflect experience and some exploration.</p>
+ ${cueWeightsTable()}
+ <details><summary>What does this have to do with bee learning?</summary><p>Bees can learn that floral cues predict rewards. In this game, every visit changes two separate expectations: where nectar is worth seeking and where nutritious pollen is worth collecting. Those expectations may disagree. This illustrates a principle tested by Muth, Papaj &amp; Leonard (2015) in <em>Bombus impatiens</em>, not a fitted simulation of their experiment.</p><p>When rewards change, previous experience can become less reliable, so the bee's expected choices can change as well.</p></details>
+ <details><summary>Research connection: caffeine and odor memory</summary><p>Wright et al. (2013) showed that low-dose caffeine in nectar can enhance honeybees’ later memory of a learned odor. This game models greater retention for caffeine-paired odors in <em>Apis mellifera</em> between the two trials; the exact strength of the effect is illustrative. Nectar energy is unaffected by caffeine. The same effect is not assumed for <em>Bombus terrestris</em>.</p></details>
+ </section>`;
+}
+function beeChoice(){
+ if(!['trial1','trial2'].includes(state.stage))return;
+ if(state.stage==='trial1'&&state.visits.length<3)return;
+ if(state.stage==='trial2'&&state.trial2Prediction===null)return;
+ const p=preferenceShares(state.memory,state.focus);
+ const n=(state.stage==='trial1'?state.visits:state.trial2Visits).length;
+ const r=deterministic(n*53+7+state.trial*14);let sum=0;
+ const selected=meadow.find(f=>(sum+=p[f.id])>=r)||meadow.at(-1);
+ const visits=state.stage==='trial1'?state.visits:state.trial2Visits;
+ const counts=Array.from({length:FLOWERS_PER_TYPE},(_,i)=>visits.filter(v=>v.id===selected.id&&v.individualNumber===i+1).length);
+ const min=Math.min(...counts),least=counts.map((count,i)=>count===min?i:-1).filter(i=>i>=0);
+ const individual=least[Math.floor(deterministic(n*31+3)*least.length)];
+ doVisit(selected.id,individual,'model');
+}
+function summary(arr){let obj={};for(let f of meadow){let a=arr.filter(v=>v.id===f.id);obj[f.id]={count:a.length,net:a.length?avg(a,'net'):null,rate:a.length?avg(a,'rate'):null,nectar:a.length?avg(a,'nectar'):null,time:a.length?avg(a,'time'):null,transfer:a.length?avg(a,'transfer'):null,conspecific:a.reduce((t,v)=>t+(v.conspecificDep||0),0),contact:a.filter(v=>v.stigmaContact).length}}return obj}
+const avg=(arr,k)=>arr.reduce((s,v)=>s+v[k],0)/arr.length;
+function tableVisits(arr){
+  const sums=summary(arr);
+  return `<div style="overflow-x:auto"><table class="data-table"><thead><tr>${['Floral type','Visits','Nectar energy / visit','Handling (s)','Flight (s)','Net energy / s','Stigma contact chance*','Conspecific pollen deposited†'].map(s=>`<th>${s}</th>`).join('')}</tr></thead><tbody>${meadow.map(f=>{const a=arr.filter(v=>v.id===f.id),m=sums[f.id];let row=[f.name,m.count,m.nectar?.toFixed(2)??'—',a.length?avg(a,'handling').toFixed(2):'—',a.length?avg(a,'travel').toFixed(2):'—',m.rate?.toFixed(2)??'—',m.transfer?.toFixed(2)??'—',m.conspecific.toFixed(1)];return `<tr>${row.map(v=>`<td>${v}</td>`).join('')}</tr>`}).join('')}</tbody></table></div><p class="small">*Simulated probability of pollen-bearing body contact with a stigma; not a probability of successful pollination. †Illustrative conspecific pollen units delivered at modeled stigma contacts. Conspecific pollen is not automatically genetically compatible; neither figure estimates fertilization, seed set, fruit set, or measured pollination efficacy.</p>`;
+}
+
+function encounter(v){
+ const f=meadow.find(x=>x.id===v.id),prev=(v.trial===1?state.visits:state.trial2Visits).at(-2);
+ return `<div class="observation"><strong>Latest visit: ${esc(f.name)} ${v.individualNumber}</strong> <span class="tag">${v.source==='model'?'Bee-directed':'Student-directed'}</span>
+ <div class="visit-metrics"><div><span>Nectar energy</span><b>${v.nectar.toFixed(2)}</b></div><div><span>Nutritional pollen collected</span><b>${(v.pollenNutrition||0).toFixed(2)}</b></div><div><span>Handling</span><b>${v.handling.toFixed(1)} s</b></div><div><span>Flight</span><b>${v.travel.toFixed(1)} s</b></div><div><span>Modeled net energy/s</span><b>${v.rate.toFixed(2)}</b></div></div>
+ <p><b>What happened?</b> ${liveInsight(v.trial===1?state.visits:state.trial2Visits)}</p><p class="small"><b>Nectar chemistry:</b> ${v.nectarChemistry==='caffeine'?'Sucrose with low-dose caffeine':'Sucrose nectar'}. ${v.nectarChemistry==='caffeine'&&state.pollinator==='apis'?'This odor exposure can affect modeled memory retention when Trial 2 begins, not the energy from this visit.':'No extra energetic reward is assigned for chemistry.'}</p>
+ <p><b>For the plant:</b> ${v.stigmaContact?'Stigma contact was modeled.':'No stigma contact was modeled.'} ${v.conspecificDep.toFixed(1)} units of loose conspecific pollen were deposited. This does <em>not</em> demonstrate fertilization or seed production.</p><p class="small"><b>Bee versus plant:</b> Mayberry et al. (2024) found that learning to handle flowers increased pollen collection by bees without increasing measured pollination success for plants. Your visit separately records nutritional pollen taken by the bee and loose pollen reaching a stigma. The simulation does not model improvement in handling skill across visits.</p>
+ <p class="small">Foraging pollen <em>collected</em> is nutrition for the bee/colony; pollen loosely <em>carried</em> on the body can be transferred between flowers. They are different processes.</p></div>`;
+}
+function patchFlower(f){
+  return flowerSVG({...f,display:'single'},false,true).replace('viewBox="0 0 320 220"','viewBox="75 22 170 166"');
+}
+function meadowMap(arr){
+ const socialMode=state.stage==='trial3'&&state.pollinator==='apis';const last=arr.at(-1),where=last?positionForKey(last.individualId):(socialMode?[50,93]:[8,50]);
+ const places=intermingledPositions();
+ const trail=arr.slice(-9),startIndex=arr.length-trail.length;
+ const segments=trail.map((v,j)=>{
+  const previous=(startIndex+j)>0?arr[startIndex+j-1]:null;
+  const a=previous?positionForKey(previous.individualId):(socialMode?[50,93]:[8,50]);
+  const b=positionForKey(v.individualId);
+  const same=previous&&previous.id===v.id;
+  const col=same?'#227e64':'#c07740';
+  const style=v.source==='model'?'':'stroke-dasharray="7 6"';
+  const opacity=(.25+.65*(j+1)/trail.length).toFixed(2);
+  return `<line x1="${a[0]*10}" y1="${a[1]*10}" x2="${b[0]*10}" y2="${b[1]*10}" stroke="${col}" stroke-width="${j===trail.length-1?7:4.2}" opacity="${opacity}" stroke-linecap="round" ${style}/>`;
+ }).join('');
+ return `<div class="map-shell"><div class="meadow-scene" id="meadow-scene" onpointermove="moveBee(event)" onpointerleave="leaveBee()">
+ <div class="meadow-grass" aria-hidden="true"></div><div class="meadow-path" aria-hidden="true"></div>
+ <svg class="flight-trail" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">${segments}</svg>
+ <div class="field-instruction">${socialMode?'Search the same Gathering meadow. Sun is north, above the hive; click a flower to investigate.':'Select any flower. Compare new flowers with revisits; lines show your recent route.'}</div>
+ ${socialMode?'<div class="sun-field">☀ Sun · NORTH ↑</div><div class="hive-field">⌂ Hive · starting point</div>':''}
+ ${meadow.map(f=>Array.from({length:FLOWERS_PER_TYPE},(_,n)=>{
+  const key=flowerKey(f.id,n),p=places[key],visited=arr.some(v=>v.individualId===key),code=({azure:'A',gold:'G',cream:'C',rose:'R',designed:'D'})[f.id];
+  return `<button type="button" class="scattered-flower ${f.id==='designed'?'designed-flower':''} ${last?.individualId===key?'last-flower':''} ${visited?'sampled-flower':''}" style="left:${p[0]}%;top:${p[1]}%" onclick="${socialMode?`searchFlower('${f.id}',${n})`:`doVisit('${f.id}',${n})`}" aria-label="Visit ${esc(f.name)}, individual ${n+1}" title="${esc(f.name)} · ${code}${n+1}${visited?' · already visited':''}"><span class="individual-art" aria-hidden="true">${patchFlower(f)}</span><span class="individual-number" aria-hidden="true">${code}${n+1}</span></button>`;
+ })).join('')}
+ <div id="bee-cursor" class="bee-cursor" style="left:${where[0]}%;top:${where[1]}%" aria-hidden="true">🐝</div>
+ </div></div>`;
+}
+function moveBee(ev){
+  if(ev.pointerType==='touch')return;
+  const map=document.getElementById('meadow-scene'),bee=document.getElementById('bee-cursor');if(!map||!bee)return;
+  const r=map.getBoundingClientRect();bee.style.left=`${Math.max(2,Math.min(98,(ev.clientX-r.left)/r.width*100))}%`;bee.style.top=`${Math.max(3,Math.min(97,(ev.clientY-r.top)/r.height*100))}%`;
+}
+function leaveBee(){const b=document.getElementById('bee-cursor');if(b){const a=state.trial===1?state.visits:state.trial2Visits;const last=a.at(-1),p=last?positionForKey(last.individualId):[9,52];b.style.left=p[0]+'%';b.style.top=p[1]+'%'}}
+function liveInsight(arr){
+ if(!arr.length)return 'Choose a flower to begin gathering evidence. Your bee begins without modeled reward associations. Try multiple floral types and individual flowers.';
+ const v=arr.at(-1),old=arr.slice(0,-1),prev=old.at(-1);
+ const visitedType=old.filter(x=>x.id===v.id),visitedIndividual=old.filter(x=>x.individualId===v.individualId);
+ let observation='';
+ if(visitedIndividual.length){
+  const lastIndividual=visitedIndividual.at(-1);
+  observation=v.nectar+0.2<lastIndividual.nectar?`You returned to ${v.name} ${v.individualNumber} and received less nectar than on its previous visit. Individual flowers can be depleted.`:`You returned to the same individual flower. Its nectar availability is not necessarily identical on every visit.`;
+ }else if(visitedType.length){observation=`You tried a different ${v.name} individual. Conspecific flowers share traits, but individual reward supplies can vary.`;}
+ else{observation=`This is your first encounter with ${v.name}. A single visit tells you something about this flower, not everything about its type.`;}
+ const active=v.learning?.[v.focus],level=active?.error;
+ let learning='';
+ if(visitedType.length===0){learning='The model has now begun associating this flower’s color, scent and shape with the rewards encountered.';}
+ else if(level!==undefined){
+  learning=Math.abs(level)<.08?'This return was close to the modeled expectation, so its associations changed little.':
+  level>0?'This visit was more rewarding than expected. The bee’s associations with these floral cues strengthened.':'This visit was less rewarding than expected. The bee’s associations with these floral cues weakened.';
+ }
+ const byType=old.filter(x=>x.id===v.id),rates=byType.map(x=>x.focus===v.focus?(v.focus==='pollen'?x.pollenRate:x.rate):null).filter(x=>x!==null);
+ if(rates.length>=2){const range=Math.max(...rates)-Math.min(...rates);if(range>1.0)learning+=' Earlier returns from this floral type varied considerably, so its reward is not reliably predicted by appearance alone.';}
+ if(prev&&prev.id===v.id)learning+=' The last two visits were to the same floral type. This resembles floral constancy; the sequence alone does not show why the bee chose it.';
+ const side=v.conspecificDep>0?` Loose pollen from a previous ${v.name} visit was deposited on this modeled stigma; this is not proof of fertilization.`:v.heterospecificDep>0?' Some deposited pollen originated from another floral type, illustrating that visitation does not guarantee compatible transfer.':' Nectar or pollen collection here did not establish successful pollen delivery.';
+ return `${observation} ${learning}${side}`;
+}
+
+function setFocus(f){
+ if(!['nectar','pollen'].includes(f)||!['trial1','trial2'].includes(state.stage))return;
+  if(state.focus===f)return;saveUndo('foraging focus');state.focus=f;render(true);
+}
+function revisitPrompt(arr){
+ const seen=arr.length>=4&&new Set(arr.map(v=>v.individualId)).size>=3;
+ const repeated=arr.some((v,i)=>i>0&&arr.slice(0,i).some(w=>w.individualId===v.individualId));
+ if(!seen||repeated||state.shownRevisit)return '';
+ return `<div class="hud-reminder"><b>Try a return visit?</b><p>Revisit an individual flower, then compare its reward with a different individual of the same floral type. Floral cues may be alike even when standing nectar differs.</p><button class="button secondary tiny" onclick="state.shownRevisit=true;render(true)">Dismiss hint</button></div>`;
+}
+function expectBrief(){
+ const p=preferenceShares(state.memory,state.focus),rank=[...meadow].sort((a,b)=>(p[b.id]||0)-(p[a.id]||0));
+ const total=state.visits.length+state.trial2Visits.length;
+ if(!total)return 'The bee has no experience yet; its first choice is largely exploratory.';
+ if(total<3)return 'The bee has very little experience; its next choice is uncertain.';
+ const top=rank[0],second=rank[1];
+ const difference=(p[top.id]||0)-(p[second.id]||0);
+ if(difference<.045)return 'The bee has no strong preference between the leading flower types. It may explore.';
+ return `Based on its experiences seeking ${state.focus}, the model currently favors ${top.name}, but it can still choose another flower.`;
+}
+
+function liveHUD(arr,trial){
+ const n=arr.length,last=arr.at(-1),c=constancySummary(arr);
+ const totalDep=arr.reduce((x,v)=>x+(v.conspecificDep||0),0);
+ const sumNut=arr.reduce((x,v)=>x+(v.pollenNutrition||0),0);
+ const totalNet=arr.reduce((x,v)=>x+v.net,0),totalTime=arr.reduce((x,v)=>x+v.time,0);
+ const canChoose=trial===1?n>=3:true;
+ const beeReq=trial===2?`<div class="hud-reminder"><b>Observe learned decisions</b><p>${state.beeRun2Done?'You have observed a continuous sequence of at least four modeled bee decisions.':`Observe ${Math.max(0,4-(state.beeRun2||0))} more consecutive bee-directed choices. Each new student-directed visit restarts the sequence.`} Patterns of constancy or switching are not predetermined.</p></div>`:'';
+ return `<aside class="meadow-hud" aria-label="Live field observations">
+ <div class="hud-progress"><b>${n} visits</b><span>${new Set(arr.map(v=>v.id)).size}/3 floral types</span></div>
+ <div class="hud-focus"><b>Bee’s current foraging focus</b><div class="focus-options"><button class="${state.focus==='nectar'?'active':''}" aria-pressed="${state.focus==='nectar'}" onclick="setFocus('nectar')">💧 Nectar</button><button class="${state.focus==='pollen'?'active':''}" aria-pressed="${state.focus==='pollen'}" onclick="setFocus('pollen')">🌼 Pollen</button></div><p>Previous experiences influence which floral cues the bee favors for this resource.</p></div>
+ <div class="hud-metrics"><div><small>Last nectar energy</small><b>${last?last.nectar.toFixed(2):'—'}</b></div><div><small>Last pollen collected</small><b>${last?(last.pollenNutrition||0).toFixed(2):'—'}</b></div><div><small>Handling / flight</small><b>${last?last.handling.toFixed(1)+' / '+last.travel.toFixed(1)+' s':'—'}</b></div><div><small>Net nectar energy/s</small><b>${totalTime?(totalNet/totalTime).toFixed(2):'—'}</b></div></div>
+ <div class="hud-insight"><b>${last?`${esc(last.name)} · ${({azure:'A',gold:'G',cream:'C',rose:'R',designed:'D'})[last.id]}${last.individualNumber}`:'Your latest observation'}</b><p>${liveInsight(arr)}</p></div>
+ <div class="hud-floral"><b>Flower key</b><div class="hud-tags">${meadow.map(f=>`<span><i style="background:${colorMap[f.color]}"></i><b>${({azure:'A',gold:'G',cream:'C',rose:'R',designed:'D'})[f.id]}</b> ${esc(f.name.replace('Your designed flower','Your flower'))}${f.id==='designed'?' ★':''}</span>`).join('')}</div></div>
+ <p class="hud-note"><b>Flight trail:</b> green = repeat floral type; amber = switch. Dashed = student-directed; solid = bee-directed. Recent legs remain visible.</p><div class="hud-pollen"><span><b>Same-type transitions</b><strong>${c.rate===null?'—':Math.round(c.rate*100)+'%'}</strong></span><span><b>Loose conspecific pollen deposited</b><strong>${totalDep.toFixed(1)} units</strong></span></div>
+ <p class="hud-note">Nutritional pollen collected so far: ${sumNut.toFixed(1)} units. This is <b>different</b> from loose pollen carried for stigma deposition.</p>
+ ${revisitPrompt(arr)}
+ <div class="bee-direct"><b>Observe the bee’s next choice</b><p>${expectBrief()}</p>${canChoose?button('Observe the bee’s next choice','beeChoice()',true):`<p>Make ${3-n} more visits before the bee has enough experience for a model-directed choice.</p>`}</div>
+ ${beeReq}
+ ${enough(arr)?trial===2&&!state.beeRun2Done?`<div class="hud-ready"><b>One more observation task</b><p>Watch four consecutive model-directed choices to see whether the bee repeats or switches floral types.</p></div>`:`<div class="hud-ready"><b>Ready to review</b><p>You may continue exploring or proceed to the guided explanation.</p><button class="button" onclick="document.getElementById('trial-interpret').scrollIntoView({behavior:'smooth'})">Review observations →</button></div>`:`<p class="hud-note">Sample at least 12 visits across three floral types (about ${Math.max(0,12-n)} visits remaining).</p>`}
+ </aside>`;
+}
+function personalEvidence(arr,trial){
+ const c=constancySummary(arr),s=summary(arr),sampled=meadow.filter(f=>s[f.id].count>0);
+ const byRate=[...sampled].sort((a,b)=>(s[b.id].rate??-1e4)-(s[a.id].rate??-1e4));
+ const best=byRate[0];
+ const dep=arr.reduce((a,v)=>a+(v.conspecificDep||0),0);
+ const collected=arr.reduce((a,v)=>a+(v.pollenNutrition||0),0);
+ const models=arr.filter(v=>v.source==='model');
+ const revisits=arr.filter((v,i)=>arr.slice(0,i).some(w=>w.individualId===v.individualId)).length;
+ return `<div class="personal-evidence"><h3>What did your visits reveal?</h3>
+ <p><b>Foraging:</b> Among the floral types you sampled, ${esc(best?.name||'no flower')} had the greatest observed average net nectar energy per foraging second${best?` (${s[best.id].rate.toFixed(2)} modeled units/s)`:''}. This is a result from <em>your investigation</em>, not a universal ranking.</p>
+ <p><b>Learning:</b> Your bee encountered floral cues repeatedly. ${models.length?`It made ${models.length} model-directed choice${models.length===1?'':'s'}, drawing on previously learned reward associations.`:'You directed all visits; the bee’s modeled associations still updated after every experience.'} ${trial===2?'Existing associations carried over from Trial 1, even though resource conditions changed.':'In a new meadow, each visit adds information about reward availability.'}</p>
+ <p><b>Individual flowers:</b> ${revisits?`You revisited individual flowers ${revisits} time${revisits===1?'':'s'}, offering an opportunity to investigate depletion and replenishment.`:'You did not yet return to an individual flower. You can continue the investigation if you want to compare fresh and previously visited blossoms.'}</p>
+ <p><b>For the plants:</b> ${c.same} of ${Math.max(0,arr.length-1)} consecutive transitions stayed on the same plant type. The model recorded ${dep.toFixed(1)} loose conspecific pollen units deposited. <b>For the bee:</b> it collected ${collected.toFixed(1)} nutritional pollen units in addition to nectar. These are separate benefits or opportunities.</p>
+ <p>${s.designed?.count?`Your constructed flower was visited ${s.designed.count} time${s.designed.count===1?'':'s'}. Compare its outcomes with your initial prediction.`:'Your designed flower has not been sampled; its original predicted performance remains untested.'}</p>
+ <div class="note"><b>Takeaway:</b> A flower that supplies food to a bee does not necessarily receive compatible pollen, and learned expectations can change when a flower’s rewards change. You can continue exploring, or carry these observations into the next trial.</div></div>`;
+}
+function tradeoffsPanel(arr){
+ if(arr.length<2)return '';
+ const perType=meadow.map(f=>{const visits=arr.filter(v=>v.id===f.id);return {name:f.name,n:visits.length,rate:visits.length?avg(visits,'rate'):null,dep:visits.length?visits.reduce((v,x)=>v+(x.conspecificDep||0),0)/visits.length:null};}).filter(f=>f.n>0);
+ const bee=[...perType].sort((a,b)=>b.rate-a.rate)[0];
+ const plant=[...perType].filter(f=>f.dep>0).sort((a,b)=>b.dep-a.dep)[0];
+ return `<div class="note"><h3>Two sides of the interaction</h3><div class="grid"><div><b>Bee's observed foraging return</b><p><strong>${esc(bee?.name||'Not measured')}</strong><br>${bee?bee.rate.toFixed(2)+' net energy units/s (sample mean)':'—'}</p></div><div><b>Plant-side proxy: conspecific pollen deposition</b><p><strong>${esc(plant?.name||'No conspecific deposition observed')}</strong><br>${plant?plant.dep.toFixed(2)+' modeled pollen units/visit (sample mean)':'—'}</p></div></div><p class="small">These are different outcomes. The second is a simulated deposition proxy, not actual reproductive success. Both rankings depend on your own sampling sequence and can change with further visits.</p><p class="small"><b>Research connection — Mayberry et al. (2024):</b> In their experiment, experience improved bees’ pollen collection without improving the plants’ measured pollination success. Our game illustrates this possible divergence by recording pollen collected for nutrition separately from loose pollen deposited on stigmas; it does not simulate learning-induced improvements in flower handling or actual seed set.</p></div>`;
+}
+function constancySummary(arr){
+ const n=arr.length;if(n<2)return {n,same:0,rate:null,baseline:null};
+ const counts=Object.fromEntries(meadow.map(f=>[f.id,arr.filter(v=>v.id===f.id).length]));
+ const same=arr.slice(1).filter((v,i)=>v.id===arr[i].id).length;
+ const chance=Object.values(counts).reduce((total,k)=>total+k*(k-1),0)/(n*(n-1));
+ return {n,same,rate:same/(n-1),baseline:chance};
+}
+function fieldStats(arr){
+ const sumNet=arr.reduce((sum,x)=>sum+x.net,0),sumTime=arr.reduce((sum,x)=>sum+x.time,0),types=new Set(arr.map(x=>x.id)).size,individuals=new Set(arr.map(x=>x.individualId)).size;
+ const c=constancySummary(arr),dep=arr.reduce((sum,v)=>sum+(v.conspecificDep||0),0),contacts=arr.filter(v=>v.stigmaContact).length;
+ const sequence=arr.slice(-10).map(v=>`<span class="tag" title="${esc(v.name)}">${esc(v.name.replace(' cups','').replace(' discs','').replace(' flags','').replace(' spurs','').replace('Your designed flower','Designed'))}</span>`).join(' <span aria-hidden="true">→</span> ');
+ return `<div class="field-stats"><div class="stat"><small>Visits</small><b>${arr.length}</b></div><div class="stat"><small>Floral types sampled</small><b>${types} / 5</b></div><div class="stat"><small>Individual flowers visited</small><b>${individuals} / ${FLOWERS_PER_TYPE*meadow.length}</b></div><div class="stat"><small>Cumulative net energy / s</small><b>${sumTime?(sumNet/sumTime).toFixed(2):'—'}</b></div></div>
+ <div class="learning-panel"><h3>Visit sequence and floral constancy</h3><p class="small">${arr.length?sequence:'Your flower choices will appear here.'}</p>
+ <p><b>${c.rate===null?'—':Math.round(c.rate*100)+'%'}</b> of consecutive visits stayed within the same floral type${c.rate!==null?` (${c.same} of ${arr.length-1} transitions)`:''}. A shuffled sequence with the <i>same visit totals</i> would average <b>${c.baseline===null?'—':Math.round(c.baseline*100)+'%'}</b> same-type transitions.</p><p class="small">This is a descriptive measure of the visit sequence you directed (or delegated to the model). It does not independently prove learned floral constancy. Each named floral type stands for a hypothetical plant species; individuals within it are conspecific. Switching plant types can change which pollen is conspecific on the next stigma.</p>
+ <p class="small"><b>Modeled pollen outcome:</b> ${dep.toFixed(1)} conspecific pollen units deposited across ${contacts} stigma-contact events; not seed set or fertilization.</p></div>`;
+}
+
+function enough(arr){return arr.length>=12&&new Set(arr.map(v=>v.id)).size>=3}
+function trial1View(){state.trial=1;let a=state.visits,last=a.at(-1);return `<div class="panel game-panel">${title('Trial 1 · Discover')}<p class="game-summary">Explore the mixed meadow as <em>${species[state.pollinator].name}</em>. You choose where to forage; after several visits you may also observe a modeled bee choice. Nectar and pollen offer different rewards.</p>
+ <div class="trial-game-layout">${meadowMap(a)}${liveHUD(a,1)}</div>
+ <details class="deep-notebook"><summary>Field notebook, initial hypothesis and detailed observations</summary><p><strong>Initial prediction:</strong> ${esc(({access:'Less effort collecting rewards',memory:'Stronger odor or color memory',transfer:'More pollen deposition opportunity',rate:'Higher net energy per foraging time'})[state.pred.outcome]||state.pred.outcome)}.</p><div class="flowerbox" style="max-width:340px">${flowerSVG(state.design)}</div>${fieldStats(a)}${tradeoffsPanel(a)}${last?encounter(last):''}${learnedPreferences()}${tableVisits(a)}<div class="row">${button('Export visits (CSV)','exportNotebook()',true)}</div></details>
+ <div id="trial-interpret" class="review-area">${enough(a)?`${personalEvidence(a,1)}<div class="row">${button('Continue Exploring to Learn more for the Next Gathering?',"document.getElementById('meadow-scene').scrollIntoView({behavior:'smooth'})",true)}${button('Carry this experience into Trial 2 →','finishTrial1()')}</div>`:''}</div></div>`;
+}
+function toggleOriginal(){$('original').classList.toggle('hidden')}
+function applyOdorRetention(){
+ const bank=state.memory.nectar;const details=[];const seen=new Set(meadow.map(f=>f.scent));
+ for(const scent of seen){const key='scent:'+scent,before=bank.weights[key]||0,exp=state.odorExposure?.[scent]||{plain:0,caffeine:0},total=exp.plain+exp.caffeine;
+ const exposed=state.pollinator==='apis'&&total>0?exp.caffeine/total:0;
+ const retention=.55+.30*exposed;bank.weights[key]=before*retention;
+ details.push({scent,before:+before.toFixed(3),after:+bank.weights[key].toFixed(3),withoutCaffeine:+(before*.55).toFixed(3),caffeineShare:+exposed.toFixed(2),retention:+retention.toFixed(2)});
+ }
+ state.memoryRetention={species:state.pollinator,details,illustrative:true};
+}
+function finishTrial1(){if(!enough(state.visits))return;if(state.trial2Prediction!==null||state.trial1Memory){go('trial2');return;}state.trial1End={memory:structuredClone(state.memory),pollenLoad:structuredClone(state.pollenLoad),odorExposure:structuredClone(state.odorExposure),pool1:structuredClone(state.pools[1])};state.trial1Memory=structuredClone(state.memory);state.pollenLoad=newPollenLoad();applyOdorRetention();go('trial2');state.trialStarts.trial2=snapshot();render();}
+function retentionExplanation(){
+ if(!state.memoryRetention)return '';
+ const m=state.memoryRetention;const eligible=m.species==='apis'&&m.details.some(x=>x.caffeineShare>0);
+ return `<div class="memory-teach"><b>What happened to learned odors between trials?</b><p>Time passed in the simulation. Odor associations were partially retained. ${eligible?'For <em>Apis mellifera</em>, odors previously paired with caffeine-containing nectar were assigned greater retention than odors paired only with sucrose. This does not add nectar calories.':'This pathway does not use a caffeine-specific retention bonus. The experimental finding motivating that bonus comes from <em>Apis mellifera</em>.'}</p>
+ ${m.details.map(x=>`<div class="memory-row"><b>${esc(x.scent)} odor:</b> ${x.before.toFixed(2)} → ${x.after.toFixed(2)} modeled association ${x.caffeineShare>0&&eligible?`(without caffeine exposure: ${x.withoutCaffeine.toFixed(2)})`:''}</div>`).join('')}
+ <p class="small">These retention factors are illustrative. Wright et al. (2013) demonstrated enhanced later memory for an associated odor in honeybees, not the numerical percentages used here.</p></div>`;
+}
+
+function trial2View(){state.trial=2;let a=state.trial2Visits,last=a.at(-1);return `<div class="panel game-panel">${title('Trial 2 · Adapt')}<p class="game-summary">The reward landscape has changed. Learned expectations from Trial 1 remain, but the actual rewards may differ. Watch what the bee chooses and investigate new evidence.</p>
+ ${retentionExplanation()}${state.trial2Prediction===null?`<fieldset><legend>Prediction before exploration</legend><p>What strategy might help when familiar rewards change?</p>${opts('prediction',[['persist','Continue visiting a previously rewarding type','A familiar choice may still be useful.'],['explore','Investigate alternatives and update expectations','Past experience can become less reliable.'],['random','Explore without relying on earlier visits','The bee would gather new evidence without committing to an old preference.']],state.reflection.trial2Draft||'explore','pickTrial2')}<div class="row">${button('Record prediction and investigate →','startTrial2()')}</div></fieldset>`:
+ `<div class="trial-game-layout">${meadowMap(a)}${liveHUD(a,2)}</div><details class="deep-notebook"><summary>Detailed notebook and reward-association changes</summary><p>Earlier prediction: <b>${esc(state.trial2Prediction)}</b></p>${fieldStats(a)}${tradeoffsPanel(a)}${last?encounter(last):''}${learnedPreferences()}${tableVisits(a)}<div class="row">${button('Export visits (CSV)','exportNotebook()',true)}</div></details><div id="trial-interpret" class="review-area">${enough(a)?`${personalEvidence(a,2)}${!state.beeRun2Done?'<div class="caution">Before continuing, select “Observe the bee’s next choice” four times in a row. You may repeat the sequence if interrupted. This demonstrates possible persistence, exploration or switching—it does not force constancy.</div>':`<div class="row">${button('Continue exploring',"document.getElementById('meadow-scene').scrollIntoView({behavior:'smooth'})",true)}${button('Continue to Trial 3 →','finishTrial2()')}</div>`}`:''}</div>`}
+ </div>`;
+}
+function pickTrial2(v){state.reflection.trial2Draft=v;render()}
+function startTrial2(){state.trial2Prediction=state.reflection.trial2Draft||'explore';state.trial=2;render()}
+function setTrial2Interpret(v){state.reflection.trial2Interpret=v}
+function finishTrial2(){if(!enough(state.trial2Visits)||!state.beeRun2Done)return;go('socialHyp');}
+function socialHypView(){
+ const sp=species[state.pollinator];const scenarios=state.pollinator==='apis'?
+ [['novel','Find a resource at an unfamiliar location','Another worker may advertise a patch you have not personally visited.'],['familiar','Search for a resource you have visited before','Private experience may reduce your need for information from a dance.']]:
+ [['two-step','Investigate a concealed two-step feeding device','The mechanism is unfamiliar; one action must prepare the next.'],['simple','Investigate a two-step device with a visible mechanism','A visible latch provides a clue about how the mechanism works. Both actions are still necessary.']];
+ return `<div class="panel">${title('Trial 3 · Information from other bees')}<p>Experience can be acquired individually, but some bees also use information produced by other bees. Investigate a new challenge as <em>${sp.name}</em>.</p>
+ <fieldset><legend>Choose an investigation</legend>${opts('context',scenarios,state.socialContext||scenarios[0][0],'pickSocialContext')}</fieldset>
+ <fieldset><legend>What do you expect social information to change?</legend>${opts('social',[['conditional','Its usefulness depends on the situation','A useful earlier memory might make observation less necessary.'],['nohelp','Independent investigation might be enough','You may already have the needed information or a simple task.'],['help','Watching another bee could provide useful information','Observations might help the next decision.']],state.socialPrediction||'conditional','pickSocialPred')}</fieldset>
+ <div class="note"><b>Next:</b> Decide whether to consult another bee. You can investigate either approach and replay to compare.</div>${button('Enter Trial 3 →','startSocial()')}</div>`;
+}
+
+function pickSocialContext(v){state.socialContext=v;resetSocial();state.socialHistory=[];render();}
+function pickSocialPred(v){state.socialPrediction=v;render()}
+function targetFromMeadow(){
+ const places=intermingledPositions();const entries=Object.entries(places);
+ if(state.socialContext==='familiar'){
+   const remembered=state.trial2Visits.at(-1)||state.visits.at(-1);if(remembered&&places[remembered.individualId])return remembered.individualId;
+ }
+ // A resource away from the hive, among the same 20 individually clickable flowers.
+ const choices=entries.filter(([key,[x,y]])=>x>59&&y<65);
+ return (choices.length?choices:entries).sort((a,b)=>{const score=([,p])=>Math.abs(p[0]-74)+Math.abs(p[1]-39);return score(a)-score(b);})[0][0];
+}
+function startSocial(){state.socialPrediction??='conditional';state.socialContext??=(state.pollinator==='apis'?'novel':'two-step');resetSocial();state.socialHistory=[];state.socialTargetKey=state.pollinator==='apis'?targetFromMeadow():null;go('trial3');state.trialStarts.trial3=snapshot();render();}
+function socialInformation(choice){if(!['observe','independent'].includes(choice))return;
+ if(state.socialAttempts.length&&(state.socialObserved!==(choice==='observe'))){if(!confirm('Changing your information strategy requires restarting this Trial 3 attempt. Your earlier trials will stay intact. Continue?'))return;state.socialAttempts=[];state.socialSuccess=false;state.socialCelebrated=false;state.socialMessage='';state.puzzleStep=0;}
+ saveUndo('information choice');state.socialObserved=choice==='observe';state.socialPhase=state.socialObserved?'briefing':'field';state.socialMessage='';render();}
+function enterSocialField(){saveUndo('begin investigation');state.socialPhase='field';render();}
+function attemptSocial(path){if(path==='observe')socialInformation('observe');}
+
+function observeSocial(){socialInformation('observe');}
+
+function waggleAngle(){const p=positionForKey(state.socialTargetKey);const dx=p[0]-50,dy=93-p[1];return Math.round(Math.atan2(dx,dy)*180/Math.PI);}
+function waggleDistance(){const p=positionForKey(state.socialTargetKey);const dist=Math.hypot(p[0]-50,p[1]-93);return dist<45?'relatively nearby':'farther from the hive';}
+function searchFlower(id,individual){if(state.stage!=='trial3'||state.pollinator!=='apis'||state.socialPhase!=='field'||state.socialSuccess)return;
+ const individualId=flowerKey(id,individual);saveUndo('search a flower');const f=meadow.find(g=>g.id===id);const found=individualId===state.socialTargetKey;
+ state.socialAttempts.push({path:state.socialObserved?'dance information':'independent',id,name:f.name,individualId,individualNumber:individual+1,found,context:state.socialContext});
+ if(found){state.socialSuccess=true;state.socialPhase='success';state.socialMessage=`You found the advertised resource at ${f.name} ${individual+1} after ${state.socialAttempts.length} search${state.socialAttempts.length===1?'':'es'}. ${state.socialObserved?'The dancer helped describe a search direction and distance, but you still had to find the individual flower.':'You found it using independent investigation.'}`;}
+ else state.socialMessage=`This ${f.name} does not contain the advertised target. ${state.socialObserved?'The dance indicated an approximate direction relative to the sun, not the exact flower. Try a nearby blossom along that bearing.':'Explore another location, or return to the hive to consult the dancer.'}`;
+ render(true);
+}
+
+function choosePuzzle(action){
+ // Both visual variants of the task are two-step mechanisms. A red-first action
+ // must NEVER produce a reward, regardless of context or observation history.
+ if(state.stage!=='trial3'||state.pollinator!=='bombus'||state.socialPhase!=='field'||state.socialSuccess)return;
+ if(action!=='blue'&&action!=='red')return;
+ saveUndo('puzzle action');
+ let message='',found=false;
+ if(action==='blue'){
+   if(state.puzzleStep===1){
+     message='The blue tab is already out of the way. Nothing new happens; examine the other control.';
+   }else{
+     state.puzzleStep=1;
+     message='The blue tab shifts aside, but the food compartment remains closed. The first action did not release nectar.';
+   }
+ }else if(state.puzzleStep===1){
+   found=true;
+   state.puzzleStep=2;
+   message='With the blue tab moved aside, the red tab now opens the compartment. You completed the blue-then-red sequence.';
+ }else{
+   state.puzzleStep=0;
+   message=state.socialContext==='simple'
+     ? 'The red tab will not move: a blue latch visibly obstructs its path. Examine the mechanism and try another action.'
+     : 'The red tab will not move and no nectar is released. Something must change in the mechanism first.';
+ }
+ state.socialAttempts.push({path:state.socialObserved?'demonstration available':'independent',action,found,context:state.socialContext});
+ state.socialMessage=message;
+ if(found){state.socialSuccess=true;state.socialPhase='success';}
+ render();
+}
+function waggleVisual(){const angle=waggleAngle(),dir=angle>=0?`${angle}° clockwise`:`${Math.abs(angle)}° counterclockwise`;
+ return `<svg class="waggle" viewBox="0 0 280 195" role="img" aria-label="Waggle run ${dir} from upward vertical on the comb"><rect x="9" y="6" width="262" height="179" rx="12" fill="#efe0ba" stroke="#c6aa77"/><path d="M30 12v166M61 12v166M92 12v166M123 12v166M154 12v166M185 12v166M216 12v166M247 12v166" stroke="#dcc89c" stroke-width="1.5"/><path d="M138 148V32" stroke="#546d56" stroke-width="3" stroke-dasharray="5 6"/><text x="149" y="30" font-size="12" fill="#395345">Up on comb</text><g transform="translate(138 129) rotate(${angle})"><path class="waggle-run" d="M0 0V-83" stroke="#b25c33" stroke-width="7" stroke-linecap="round"/><path d="M-7 -72L0 -84L7 -72" fill="none" stroke="#b25c33" stroke-width="3"/></g><text x="18" y="171" font-size="11" fill="#385143">Waggle: ${dir} from up</text></svg>`;
+}
+function celebrate(){if(state.socialCelebrated)return;state.socialCelebrated=true;storeLocalProgress();if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const cols=['#d4b043','#90bf75','#e29dab','#88a4db','#f2dd8b'];for(let i=0;i<28;i++){const el=document.createElement('span');el.className='confetti-piece';el.style.setProperty('--x',(4+Math.random()*92)+'vw');el.style.setProperty('--c',cols[i%cols.length]);el.style.setProperty('--r',(Math.random()*360)+'deg');el.style.setProperty('--t',(2+Math.random()*2)+'s');document.body.append(el);el.addEventListener('animationend',()=>el.remove(),{once:true});}
+}
+function tryOtherSocial(){if(!state.socialSuccess)return;state.socialHistory??=[];state.socialHistory.push({observed:state.socialObserved,attempts:state.socialAttempts.length,context:state.socialContext});resetSocial();state.socialTargetKey=state.pollinator==='apis'?targetFromMeadow():null;render();}
+function socialComparison(){const h=state.socialHistory||[];if(!h.length)return '';
+ return `<div class="note"><b>Earlier approach${h.length>1?'es':''}:</b> ${h.map(x=>`${x.observed?'Used information from another bee':'Investigated independently'} — ${x.attempts} action${x.attempts===1?'':'s'}`).join('; ')}. The two approaches can lead to different experiences without implying universal success probabilities.</div>`;
+}
+
+function trial3View(){
+ const a=state.socialAttempts,observed=state.socialObserved,phase=state.socialPhase||'choice';const sp=species[state.pollinator];
+ if(phase==='choice')return `<div class="panel">${title('Trial 3 · Phase 1: Decide what to investigate')}<p>As <em>${sp.name}</em>, you can use private experience or information from another bee. Neither strategy is graded, and you can replay the investigation to compare.</p>
+ <div class="social-grid"><div class="social-card"><h3>Watch another bee</h3><p>${state.pollinator==='apis'?'Observe a waggle dance performed on a vertical hive comb. The dance may indicate a search direction relative to the sun.':'Observe a trained bumblebee manipulate a food-access device. You can then attempt the same actions.'}</p>${button('Observe the demonstrator',"socialInformation('observe')")}</div><div class="social-card"><h3>Investigate independently</h3><p>${state.pollinator==='apis'?'Enter the familiar Gathering meadow without dance information. The sun still provides an external directional reference.':'Try to open the feeding device through your own actions. You can reconsider later.'}</p>${button('Explore independently',"socialInformation('independent')",true)}</div></div>${socialComparison()}</div>`;
+ if(phase==='briefing')return `<div class="panel">${title('Trial 3 · Phase 2: What did you observe?')}
+ ${state.pollinator==='apis'?`<p>You watched a worker's waggle dance on the vertical comb. The upward direction corresponds to the sun's bearing. The waggle run is <b>${waggleAngle()<0?'counterclockwise':'clockwise'} ${Math.abs(waggleAngle())}°</b> from upward; the source is <b>${waggleDistance()}</b> in this schematic meadow.</p>${waggleVisual()}<div class="note">In the meadow, the sun is shown at the <b>north/top</b> of the field. Rotate the dance direction relative to the sun, then choose where to search. The dancer does not identify the precise flower.</div>`:
+ `<p>You watched a trained <em>Bombus terrestris</em> operate the device.</p><div class="demo-steps"><span>1. Move the blue tab aside</span><span>2. Move the red tab</span><span>3. Access the reward</span></div><p>The first movement does not itself provide nectar. The observation reveals the sequence of actions.</p>`}
+ ${button('Enter the investigation →','enterSocialField()')}</div>`;
+ if(state.pollinator==='apis'){
+ const prior=state.socialContext==='familiar'?'You previously visited the advertised individual during foraging. Your own experience may be useful.':'The advertised individual is a new destination; you have no established private memory of its location.';
+ return `<div class="panel game-panel">${title('Trial 3 · Search The Gathering')}<p class="game-summary">Find the advertised resource among the <b>same twenty flowers</b> you visited earlier. The sun is north of the hive. Click a flower to investigate.</p>
+ <div class="trial-game-layout">${meadowMap(a)}
+ <aside class="meadow-hud" aria-label="Honeybee search notes"><div class="hud-focus"><b>${observed?'Waggle-dance information':'Independent search'}</b><p>${prior}</p></div>
+ ${observed?`<div class="compact-dance"><b>What the dance communicated</b>${waggleVisual()}<p><b>${Math.abs(waggleAngle())}° ${waggleAngle()<0?'counterclockwise':'clockwise'}</b> of the sun's bearing; ${waggleDistance()}. Up on the vertical comb represents the sun's direction. This is an approximate bearing, not a precise flower location.</p></div>`:`<div class="hud-reminder"><b>No dance information</b><p>Search the same Gathering meadow using its flowers, landmarks, and your prior experience. You can return to the hive to learn a direction.</p></div>`}
+ <div class="hud-floral"><b>Flower key</b><div class="hud-tags">${meadow.map(f=>`<span><i style="background:${colorMap[f.color]}"></i><b>${({azure:'A',gold:'G',cream:'C',rose:'R',designed:'D'})[f.id]}</b> ${esc(f.name.replace('Your designed flower','Your flower'))}</span>`).join('')}</div></div>
+ ${state.socialMessage?`<div class="hud-insight" role="status"><b>Latest search</b><p>${esc(state.socialMessage)}</p></div>`:''}
+ ${state.socialSuccess?`<div class="success-celebration"><h3>🎉 Resource discovered!</h3><p>${a.length} searches · ${observed?'Dance consulted':'Independent investigation'}. The information influenced the search but did not find the flower automatically.</p>${socialComparison()}${button('Try the other approach','tryOtherSocial()',true)}${button('Continue to the learning record →','finishSocial()')}</div>`:`<div class="hud-reminder"><b>Investigate another flower</b><p>Searches so far: ${a.length}. A dance gives direction and approximate distance, not an exact location. You can Back to your earlier information decision or Undo your last search.</p></div>`}
+ </aside></div></div>`;
+ }
+ const complex=state.socialContext==='two-step';const message=observed?'The demonstrator moved the blue tab aside before moving the red tab. The first action did not itself release food.':(complex?'The device has two movable tabs and a concealed food compartment. Try different manipulations to discover which actions are effective.':'You can see that the movable blue latch overlaps the path of the red slider. Investigate how the two controls interact to open the compartment.');
+ return `<div class="panel game-panel">${title('Trial 3 · Phase 2: Solve the feeding challenge')}<p>As <em>Bombus terrestris</em>, investigate a two-step puzzle box with ${complex?'a partly concealed mechanism':'a visible latch mechanism'}. ${observed?'You saw a trained demonstrator before trying.':'You began by investigating independently.'} This is a guided analogy of published bumblebee social-learning research.</p>
+ <div class="social-grid"><div class="social-card"><h3>The food-access device</h3><p>${message}</p><div class="puzzle-scene"><div class="puzzle-disc ${complex?'':'mechanism-visible'} ${state.puzzleStep>=1?'blue-shifted':''} ${state.socialSuccess?'reward-open':''}"><span class="tab-blue">BLUE</span><span class="tab-red">RED</span><span class="puzzle-drop">🍯</span></div></div><p>${state.socialSuccess?'The food compartment is open.':state.puzzleStep===1?'The blue tab has moved. The reward remains inaccessible until the next action.':'The feeding device is closed.'}</p><div class="row">${button('Push blue tab',"choosePuzzle('blue')",true,state.socialSuccess)}${button('Push red tab',"choosePuzzle('red')",false,state.socialSuccess)}</div></div><div class="social-card"><h3>What information is useful?</h3>${observed?`<div class="demo-steps"><span>1 · Blue tab</span><span>2 · Red tab</span><span>3 · Food</span></div><p>Observation provided an action sequence to attempt.</p>`:'<p>You have not watched the demonstration. Try a sequence and notice which actions change the device. Observation may help with unfamiliar tasks.</p>'}<p class="small">In Bridges et al. (2024), <em>B. terrestris</em> observers learned a difficult two-step task socially; this interaction is not a simulation of experimental success probabilities.</p></div></div>
+ ${state.socialMessage?`<div class="note" role="status">${esc(state.socialMessage)}</div>`:''}
+ ${state.socialSuccess?`<div class="success-celebration"><h3>🎉 Nectar accessed!</h3><p>${a.length} attempted manipulation${a.length===1?'':'s'} · ${observed?'Demonstration observed':'Independent investigation'}. What mattered was the sequence of actions, not an invented success score.</p>${socialComparison()}<div class="row">${button('Try the other approach','tryOtherSocial()',true)}${button('Continue to the learning record →','finishSocial()')}</div></div>`:'<p>Try another manipulation or return using Back. Undo reverses the most recent action.</p>'}</div>`;
+}
+
+function setSocialInterpret(v){state.reflection.socialInterpret=v}
+function finishSocial(){if(!state.socialSuccess)return;go('synthesis');}
+
+// The hypothesis report uses only observed visits. Different floral types and player choices
+// are not controlled treatments: report evidence about outcomes, not proof of trait causation.
+function hypothesisReport(){
+ const pred=state.pred||{},feature=pred.feature||'architecture',outcome=pred.outcome||'access';
+ const features={architecture:'corolla architecture and floral access',signals:'flower color and scent',display:'floral display and approach',chemistry:'nectar chemistry'};
+ const outcomes={access:'lower handling time',memory:'a stronger or longer-lasting learned association',transfer:'more opportunities for conspecific pollen deposition',rate:'greater nectar-energy returns per simulated foraging second'};
+ const all=state.visits||[]; // Hypothesis was made before Trial 1: first-trial observations form the primary comparison.
+ const designed=all.filter(v=>v.id==='designed');
+ const others=all.filter(v=>v.id!=='designed');
+ const number=(x)=>Number.isFinite(x)?x.toFixed(2):'—';
+ const mean=(rows,key)=>rows.reduce((a,v)=>a+(Number(v[key])||0),0)/rows.length;
+ const header=`<p><b>You predicted:</b> Your designed flower's ${esc(features[feature]||'selected traits')} would lead to <b>${esc(outcomes[outcome]||'a particular foraging outcome')}</b>.</p>`;
+ let measurements='',verdict='insufficient',reason='';
+ const minDesign=2,minOther=3;
+ const sufficient=(a,b)=>a.length>=minDesign&&b.length>=minOther&&new Set(b.map(v=>v.id)).size>=2;
+ if(outcome==='access'||outcome==='rate'||outcome==='transfer'){
+   let a=designed,b=others;
+   if(outcome==='rate'){a=a.filter(v=>v.focus==='nectar');b=b.filter(v=>v.focus==='nectar');}
+   let key=outcome==='access'?'handling':outcome==='rate'?'rate':'conspecificDep';
+   const label=outcome==='access'?'mean handling time':outcome==='rate'?'mean net nectar energy per simulated second':'mean conspecific pollen deposition per visit';
+   const unit=outcome==='access'?' seconds':outcome==='rate'?' energy units/s':' modeled pollen units/visit';
+   if(a.length&&b.length){
+      const x=mean(a,key),y=mean(b,key);const diff=x-y;
+      measurements=`<p><b>Your observations:</b> Your designed flower yielded a ${label} of <b>${number(x)}${unit}</b> across ${a.length} visit${a.length===1?'':'s'}, compared with <b>${number(y)}${unit}</b> for other floral types across ${b.length} visits.</p>`;
+      if(!sufficient(a,b)){
+        verdict='insufficient';reason=`You sampled ${a.length} designed-flower visits and ${b.length} comparison visits. To make a useful comparison here, investigate your design at least twice and at least three other visits spanning two different floral types${outcome==='rate'?' while seeking nectar':''}.`;
+      }else if(outcome==='transfer' && (x+y)<.04){
+        verdict='insufficient';reason='Neither group received meaningful modeled conspecific deposition during these visits. Pollen delivery depends on your prior visit sequence, so the prediction cannot be distinguished from lack of pollen transfer.';
+      }else{
+        const tolerance=outcome==='access'?.12:outcome==='rate'?.15:.10;
+        const contrast=outcome==='access'?(-diff):diff;
+        if(contrast>tolerance){verdict='support';reason=outcome==='access'?'Your observed handling times are shorter for your designed flower. This is consistent with the outcome you predicted in the simulation.':outcome==='rate'?'Your designed flower provided greater mean net nectar-energy return per simulated second. That outcome is consistent with your prediction.':'Your designed flower received more conspecific pollen per visit in the observed sequence. That is consistent with the predicted plant-side outcome.';}
+        else if(contrast< -tolerance){verdict='contradict';reason=outcome==='access'?'Your designed flower took longer to handle, not less time. Reconsider that predicted outcome.':outcome==='rate'?'Your designed flower yielded less net nectar energy per simulated second. Reconsider that predicted outcome.':'Your designed flower received less conspecific pollen per visit. Reconsider that predicted outcome.';}
+        else{verdict='insufficient';reason='The outcomes were too similar for a clear directional conclusion. More visits or a comparison with more distinct floral types could help.';}
+      }
+   }else{reason=`There are no visits to ${a.length?'other types':'your designed flower'} with which to compare this prediction${outcome==='rate'?' during nectar-focused foraging':''}.`}
+ }else if(outcome==='memory'){
+   const focus=designed.filter(v=>v.focus==='pollen').length>designed.filter(v=>v.focus==='nectar').length?'pollen':'nectar';
+   const m=state.trial1Memory||state.memory;
+   if(designed.length&&m?.[focus]){
+     const df=meadow.find(f=>f.id==='designed');const x=expectedReturn(df,m,focus);
+     const otherScores=meadow.filter(f=>f.id!=='designed').map(f=>expectedReturn(f,m,focus));
+     const y=otherScores.reduce((a,b)=>a+b,0)/otherScores.length;
+     measurements=`<p><b>Learned expectation:</b> At the end of Trial 1, the model associated your flower with a ${focus} return of <b>${number(x)}</b> (modeled return per second), versus <b>${number(y)}</b> averaged over other floral types. These are modeled expectations, not measured memory-retention performance.</p>`;
+   }
+   const scent=state.design.scent;const ret=state.memoryRetention?.details?.find(d=>d.scent===scent);
+   if(ret){measurements+=`<p><b>Later odor association:</b> The ${esc(scent)} odor changed from <b>${number(ret.before)}</b> to <b>${number(ret.after)}</b> across the simulated interval.${state.pollinator==='apis'&&ret.caffeineShare>0?` With no modeled caffeine exposure, the counterfactual would have been ${number(ret.withoutCaffeine)}.`:''}</p>`;}
+   if(feature==='chemistry'&&state.pollinator==='apis'&&state.design.chemistry==='caffeine'&&designed.some(v=>v.nectar>0)&&ret&&ret.caffeineShare>0){
+      verdict='model';reason='The simulated odor association was retained more strongly with caffeine exposure than in the no-caffeine counterfactual, consistent with the mechanism reported by Wright et al. (2013). This outcome was built into the illustrative model: it is not independent evidence that the prediction is biologically correct. Other flowers may also contribute exposure to the same scent.';
+   }else if(feature==='chemistry'&&state.pollinator==='bombus'){
+      verdict='insufficient';reason='The caffeine-related memory-retention effect is deliberately not assigned to Bombus terrestris. Wright et al. (2013) studied Apis mellifera, so this playthrough cannot adjudicate a caffeine-retention hypothesis for the bumblebee.';
+   }else{
+      verdict='insufficient';reason='The game models learned reward expectations, but this playthrough does not supply an independent, controlled comparison of long-term memory retention for your flower. An expectation after foraging is not, by itself, proof of a stronger or longer-lasting memory.';
+   }
+ }
+ // A difference between flowers does not test a trait whose effect is absent from the model.
+ const mechanisticInputs={architecture:['access','rate','transfer'],signals:['memory'],chemistry:['memory'],display:[]};
+ if(!((mechanisticInputs[feature]||[]).includes(outcome))){
+    verdict='insufficient';
+    reason=`This simulation does not isolate a modeled effect of ${features[feature]||'this characteristic'} on ${outcomes[outcome]||'that outcome'}. The numbers above describe what happened, but they cannot establish that your selected trait caused it. Treat this prediction as untested; revise the mechanism or design a controlled investigation.`;
+ }
+ const status={support:'Provisionally retain this prediction',contradict:'Reconsider this prediction',insufficient:'Keep investigating — evidence is insufficient',model:'Consistent with the modeled mechanism'}[verdict];
+ const explain=verdict==='support'?'In this game, your observed data support retaining the predicted outcome as a working hypothesis.':verdict==='contradict'?'In this game, your observed data oppose the predicted outcome; revising the hypothesis would better reflect what happened.':verdict==='model'?'The simulation demonstrates the predicted mechanism, but it does not independently test the underlying research finding.':'Do not accept or reject the prediction based on these observations alone.';
+ const caution=outcome==='transfer'?' Pollen deposition depends on the preceding flower sequence and is only a proxy for possible plant benefit, not measured seed set.':outcome==='memory'?' Learned expectations and simulated retention are different quantities.':' Comparing different flowers cannot isolate the effect of a single trait, because several floral characteristics and rewards vary together.';
+ return `<section class="hypothesis-conclusion"><h3>Return to your original hypothesis</h3>${header}${measurements}<div class="note"><b>${status}</b><p>${reason}</p><p>${explain}${caution}</p></div><p class="small">This is guidance for interpreting your own simulated observations, not a grade or a statistical test. You can return to a trial, retry a comparison or change your design to investigate another possibility.</p></section>`;
+}
+
+function synthesisView(){
+ const all=[...state.visits,...state.trial2Visits],sum=(arr,k)=>arr.reduce((a,v)=>a+(v[k]||0),0);const s1=constancySummary(state.visits),s2=constancySummary(state.trial2Visits);
+ const learned=state.trial2Visits.filter(v=>v.source==='model').length,found=state.socialSuccess;
+ return `<div class="panel">${title('Your Gathering · What the investigation revealed')}<p>You designed a flower, investigated the resources available to a pollinator, observed how experience changes subsequent choices, and explored what information another bee can provide. There are no scores or grades.</p>
+ <div class="grid"><div class="stat"><b>${state.visits.length}</b><small>Trial 1 visits</small></div><div class="stat"><b>${state.trial2Visits.length}</b><small>Trial 2 visits</small></div><div class="stat"><b>${learned}</b><small>Bee-directed choices in Trial 2</small></div><div class="stat"><b>${found?'Found':'Investigated'}</b><small>Social-information challenge</small></div></div>
+ <h3>Learning concept 1 · Pollinator behavior and learning</h3><p>Each visit provided nectar and pollen information tied to floral cues. The model updated learned expectations and used them to influence—not dictate—its future choices. Trial 2 changed reward availability while retaining prior experience, so familiar cues could become more or less useful.</p>
+ <p>You observed <b>${learned}</b> model-directed choices in Trial 2. Your foraging focus could change whether learned nectar or pollen associations influenced those choices. The model represents two reward types separately, reflecting the principle investigated by Muth and colleagues (2015).</p>
+ ${retentionExplanation()}
+ <h3>Learning concept 2 · Plant–pollinator interactions</h3><p>For the bee, your visits yielded <b>${sum(all,'nectar').toFixed(1)}</b> simulated nectar-energy units and <b>${sum(all,'pollenNutrition').toFixed(1)}</b> nutritional pollen units. For the flowers, loose pollen carried on the body produced <b>${sum(all,'conspecificDep').toFixed(1)}</b> modeled units of conspecific stigma deposition. These outcomes differ: collecting food is not the same event as moving pollen onto a receptive stigma, and deposited pollen does not establish fertilization or seed production.</p>
+ <p>Consecutive visits to the same floral type occurred in <b>${s1.same} of ${Math.max(0,state.visits.length-1)}</b> Trial 1 transitions and <b>${s2.same} of ${Math.max(0,state.trial2Visits.length-1)}</b> Trial 2 transitions. Your own choices and the model-directed choices contributed to those sequences. Sequence can influence opportunities for conspecific pollen transfer without proving the bee learned floral constancy.</p>
+ <p><b>Mayberry et al. (2024) explored the same asymmetry:</b> bees learned to handle flowers in ways that increased pollen collection without increasing the plants’ measured pollination success. Your nutritional pollen and conspecific-deposition records are different variables for that reason. The Gathering does not simulate improvement in handling skill, and deposition cannot be equated with actual reproduction.</p>
+ <h3>Connecting the concepts</h3><div class="note"><b>Experience → learned expectation → next choice → bee and plant outcomes.</b> Floral architecture can make nectar more or less accessible, rewards can change among individuals, and the pollinator's decisions change which pollen it carries between flowers. Social information can offer an additional route to a new decision.</div>
+ ${hypothesisReport()}
+ <div class="row">${button('Export field observations (CSV)','exportNotebook()')}${button('Export full learning record (JSON)','exportData()',true)}${button('Print this record','printRecord()',true)}${button('New Gathering','restart()',true)}</div><div class="note">Everything runs on your device. The game does not transmit data or collect grades. Download a CSV or JSON file if you want to preserve your observations across a new investigation.</div></div>`;
+}
+
+function exportData(){let blob=new Blob([JSON.stringify({...state,exportedAt:new Date().toISOString(),modelNote:'Illustrative educational parameters; four individual nectar and pollen stores per floral type. Separate nectar and nutritional-pollen associative cue banks, with color, scent, corolla and identity strengths updated using reward prediction errors and illustrative learning rate 0.40. At the transition between Trials 1 and 2, illustrative odor retention is 55% for ordinary sucrose exposures and up to 85% for caffeine-paired exposures only in Apis mellifera (mixtures weighted by energy intake); this is not a quantitative fit to Wright et al. (2013). Illustrative softmax temperatures 0.85 (nectar) and 0.23 (pollen), with 15% uniform exploration. Stigma contact, pollen cargo, conspecific deposition and loss are sequence-dependent teaching approximations; these are not calibrated efficacy measures or reproductive outcomes. Not calibrated to empirical species data.'},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='pollinator-learning-record.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function printRecord(){window.print()}
+function restart(){if(confirm('Start a new investigation? Your previous notebook will be replaced; export first if you want to keep it.')){const ix=meadow.findIndex(f=>f.id==='designed');if(ix>=0)meadow.splice(ix,1);clearLocalProgress();state={stage:'choose',pollinator:null,design:{...defaults},designStep:0,pred:{outcome:'access',feature:'architecture',detail:''},visits:[],trial:1,trial2Prediction:null,trial2Visits:[],focus:'nectar',beeRun2:0,beeRun2Done:false,shownRevisit:false,socialPrediction:null,socialContext:null,socialAttempts:[],socialObserved:false,socialMessage:'',puzzleStep:0,reflection:{},seed:42,fieldSeed:Math.floor(Math.random()*1000000000),pools:{1:null,2:null},memory:newMemory(),trial1Memory:null,pollenLoad:newPollenLoad(),odorExposure:{},memoryRetention:null,trial1End:null,undoHistory:[],navStack:[],trialStarts:{},socialPhase:'choice',socialTargetKey:null,socialSuccess:false,socialCelebrated:false,socialHistory:[]};render();}}
+initializeFromSave();
+render();
+
+// Offline data export; downloads only to the student's device.
+function exportNotebook(){
+  const headers=['trial','visit','flower_type','individual','choice_source','foraging_focus','nectar_chemistry','nectar_energy','nutritional_pollen_collected','handling_s','flight_s','net_energy_per_s','pollen_collected_per_s','stigma_contact_probability','stigma_contact_event','conspecific_pollen_deposition_units','heterospecific_pollen_deposition_units','loose_pollen_pickup_units','expected_before','expected_after','prediction_error'];
+  const rows=[...state.visits,...state.trial2Visits].map(v=>[v.trial,v.trial===1?state.visits.indexOf(v)+1:state.trial2Visits.indexOf(v)+1,v.name,v.individualNumber,v.source,v.focus,v.nectarChemistry||'sucrose',v.nectar,v.pollenNutrition,v.handling,v.travel,v.rate,v.pollenRate,v.transfer,v.stigmaContact,v.conspecificDep,v.heterospecificDep,v.pollenPickedUp,v.expectedBefore,v.expectedAfter,v.predictionError]);
+  const csv=[headers,...rows].map(row=>row.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  const link=document.createElement('a');link.href=url;link.download='pollinator-gathering-field-notebook.csv';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+
+</script></body></html>
